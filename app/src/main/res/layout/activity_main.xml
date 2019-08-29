@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mMainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".page.main.MainActivity"
+    tools:background="@drawable/senrenbanka_background">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/mMainAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@android:color/transparent"
+        app:elevation="0dp"
+        android:layout_marginTop="28dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/mMainToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:contentInsetStart="0dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/mPreviousGameBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/ic_keyboard_arrow_left_white_24dp"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="8dp"/>
+
+                <ImageView
+                    android:id="@+id/mToolbarInnerImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:src="@drawable/senrenbbanka_tab"/>
+
+                <ImageButton
+                    android:id="@+id/mNextGameBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/ic_keyboard_arrow_right_white_24dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="8dp"/>
+
+            </FrameLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/mCharacterViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/mMainAppBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/mAboutNavigatorActionBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:borderWidth="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="16dp"
+        app:fabSize="mini"
+        android:visibility="gone"
+        android:src="@drawable/ic_info_outline_white_24dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/mAlarmNavigatorActionBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="16dp"
+        app:fabSize="mini"
+        android:visibility="gone"
+        android:src="@drawable/ic_alarm_white_24dp"/>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/mMenuActionExpendBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/ic_menu_white_24dp"
+        android:layout_margin="16dp"
+        app:fabSize="mini"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

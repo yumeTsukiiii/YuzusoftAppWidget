@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">柚子小部件</string>
+    <string name="app_title">Yuzusoft小部件</string>
+    <string name="choose_wife_text">请选择你的老婆</string>
+    <string name="choose_wife_clothes_text">选择老婆服装</string>
+    <string name="complete_action_text">完成</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="choose_character_text">选中角色</string>
+    <string name="choose_clothes_text">选中服装</string>
+    <string name="alarm_modify_text">编辑闹钟</string>
+    <string name="repeat_date_text">重复日期</string>
+    <string name="choose_voice_text">选择老婆音</string>
+    <string name="add_alarm_tip_text">赶快添加闹钟吧！</string>
+    <string name="add_alarm_menu_item_text">添加闹钟</string>
+</resources>

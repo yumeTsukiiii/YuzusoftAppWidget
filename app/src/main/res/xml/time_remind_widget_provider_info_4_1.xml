@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/time_remind_widget_layout"
+    android:minHeight="40dp"
+    android:minWidth="250dp"
+    android:previewImage="@drawable/murasame_icon"
+    android:updatePeriodMillis="689000" />

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/app_widget_layout"
+    android:minHeight="240dp"
+    android:minWidth="240dp"
+    android:resizeMode="horizontal|vertical"
+    android:previewImage="@drawable/yoshino_icon"
+    android:updatePeriodMillis="5000" />

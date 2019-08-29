@@ -1,0 +1,29 @@
+package com.yumetsuki.yuzusoftappwidget.repo.entity
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
+
+@Entity(
+    tableName = "alarm_setting_days",
+    foreignKeys = [
+        ForeignKey(
+            entity = AlarmSetting::class,
+            childColumns = ["setting_id"],
+            parentColumns = ["id"]
+        )
+    ]
+)
+class AlarmSettingDays(
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    val id: Int,
+
+    @ColumnInfo(name = "day")
+    val day: Int,
+
+    @ColumnInfo(name = "setting_id")
+    val settingId: Int
+)

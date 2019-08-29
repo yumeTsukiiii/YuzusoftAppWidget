@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:elevation="5dp">
+
+    <TextView
+        android:id="@+id/time_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="36sp"
+        android:textColor="#fff"
+        tools:text="上午 20:30"
+        android:layout_marginStart="16dp"
+        android:layout_weight="6"
+        android:gravity="center_vertical"/>
+
+    <ImageButton
+        android:backgroundTint="#00ffffff"
+        android:id="@+id/time_remind_controller"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        tools:src="@drawable/ic_volume_up_pink_24dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>
