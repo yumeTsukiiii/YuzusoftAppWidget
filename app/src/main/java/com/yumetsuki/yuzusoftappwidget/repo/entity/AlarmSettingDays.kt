@@ -1,9 +1,11 @@
 package com.yumetsuki.yuzusoftappwidget.repo.entity
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
 @Entity(
     tableName = "alarm_setting_days",
@@ -15,6 +17,7 @@ import androidx.room.PrimaryKey
         )
     ]
 )
+@Parcelize
 class AlarmSettingDays(
 
     @PrimaryKey(autoGenerate = true)
@@ -26,4 +29,4 @@ class AlarmSettingDays(
 
     @ColumnInfo(name = "setting_id")
     val settingId: Int
-)
+): Parcelable

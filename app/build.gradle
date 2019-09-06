@@ -11,7 +11,7 @@ android {
     buildToolsVersion "29.0.1"
     defaultConfig {
         applicationId "com.yumetsuki.yuzusoftappwidget"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -34,9 +34,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    androidExtensions {
-        experimental = true
-    }
+}
+
+androidExtensions {
+    experimental = true
 }
 
 dependencies {
@@ -58,6 +59,8 @@ dependencies {
     androidTestImplementation "androidx.room:room-testing:2.2.0-beta01"
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha03"
+
+    implementation("com.squareup.moshi:moshi-kotlin:1.8.0")
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

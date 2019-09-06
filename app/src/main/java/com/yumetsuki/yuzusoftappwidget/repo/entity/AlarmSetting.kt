@@ -1,10 +1,13 @@
 package com.yumetsuki.yuzusoftappwidget.repo.entity
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "alarm_setting")
+@Parcelize
 class AlarmSetting(
 
     @PrimaryKey(autoGenerate = true)
@@ -20,9 +23,6 @@ class AlarmSetting(
     @ColumnInfo(name = "alarm_minute")
     val alarmMinute: Int,
 
-    @ColumnInfo(name = "voice_resource")
-    val voiceResource: Int,
-
     @ColumnInfo(name = "enable")
     val isEnable: Boolean
-)
+): Parcelable

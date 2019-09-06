@@ -7,11 +7,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yumetsuki.yuzusoftappwidget.R
+import com.yumetsuki.yuzusoftappwidget.config.Alarm
+import com.yumetsuki.yuzusoftappwidget.model.AlarmSettingModel
 import com.yumetsuki.yuzusoftappwidget.page.alarm_setting_modify.AlarmSettingModifyActivity
 import com.yumetsuki.yuzusoftappwidget.page.alarm_settings.adapter.AlarmSettingsAdapter
 import com.yumetsuki.yuzusoftappwidget.page.alarm_settings.viewmodel.AlarmSettingsViewModel
+import com.yumetsuki.yuzusoftappwidget.repo.entity.AlarmSetting
+import com.yumetsuki.yuzusoftappwidget.repo.entity.AlarmSettingDays
 import kotlinx.android.synthetic.main.fragment_alarm_settings.view.*
+import java.util.*
+import kotlin.random.Random
 
 class AlarmSettingsFragment: Fragment() {
 
@@ -44,19 +51,7 @@ class AlarmSettingsFragment: Fragment() {
 
             initViewModel()
 
-            mAlarmSettingsRecyclerView.adapter = AlarmSettingsAdapter(
-                viewModel.alarmSettings,
-                onAlarmIconClick = {
-
-                },
-                onAlarmItemClick = {
-
-                }
-            ).apply { viewModel.alarmSettingsAdapter = this }
-
-            mAlarmSettingsFragmentLayout
-                .background = resources.getDrawable(backgroundImageResource!!, resources.newTheme())
-
+            initView()
         }
     }
 
@@ -71,13 +66,53 @@ class AlarmSettingsFragment: Fragment() {
                 startActivityForResult(Intent(
                     context,
                     AlarmSettingModifyActivity::class.java
-                ), AlarmSettingModifyActivity.ALARM_SETTING_MODIFY_REQUEST_CODE)
+                ).apply {
+                    putExtra(
+                        AlarmSettingModifyActivity.ALARM_SETTING_ITEM_EXTRA,
+                        AlarmSettingModel(
+                            AlarmSetting(
+                                viewModel.newAlarmId,
+                                Alarm.values()[Random.nextInt(0, Alarm.values().size)].imageResource,
+                                Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
+                                Calendar.getInstance().get(Calendar.MINUTE),
+                                false
+                            ),
+                            listOf(AlarmSettingDays(-1, 1, -1))
+                        )
+                    )
+                }, AlarmSettingModifyActivity.ALARM_SETTING_MODIFY_REQUEST_CODE)
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode) {
+            AlarmSettingModifyActivity.ALARM_SETTING_MODIFY_REQUEST_CODE -> {
+                handleModifiedAlarmModel(
+                    data?.getParcelableExtra<AlarmSettingModel>(
+                        AlarmSettingModifyActivity.ALARM_SETTING_ITEM_EXTRA
+                    )
+                )
+            }
+        }
+    }
+
+    private fun handleModifiedAlarmModel(alarmSettingModel: AlarmSettingModel?) {
+        alarmSettingModel?.also {
+            if (it.alarmSetting.id == viewModel.newAlarmId) {
+                viewModel.newAlarm(it)
+            } else {
+                viewModel.updateAlarm(alarmSettingModel)
+            }
+        }
+    }
+
     private fun View.initViewModel() {
+
+        viewModel.alarmSettings.value = arrayListOf()
+
         viewModel.alarmSettings.observe(this@AlarmSettingsFragment, Observer {
             mNoAlarmTipText.visibility = if (it.isEmpty()) {
                 View.VISIBLE
@@ -86,6 +121,35 @@ class AlarmSettingsFragment: Fragment() {
             }
             viewModel.alarmSettingsAdapter?.notifyDataSetChanged()
         })
+    }
+
+    private fun View.initView() {
+        mAlarmSettingsRecyclerView.adapter = AlarmSettingsAdapter(
+            viewModel.alarmSettings,
+            onAlarmToggleIconClick = {
+                viewModel.toggleAlarm(it)
+            },
+            onAlarmItemClick = {
+                startActivityForResult(Intent(
+                    context,
+                    AlarmSettingModifyActivity::class.java
+                ).apply {
+                    putExtra(
+                        AlarmSettingModifyActivity.ALARM_SETTING_ITEM_EXTRA,
+                        it
+                    )
+                }, AlarmSettingModifyActivity.ALARM_SETTING_MODIFY_REQUEST_CODE)
+            },
+            onAlarmRemoveIconClick = {
+                viewModel.deleteAlarm(it)
+            }
+        ).apply { viewModel.alarmSettingsAdapter = this }
+
+        mAlarmSettingsRecyclerView.layoutManager = LinearLayoutManager(this@AlarmSettingsFragment.context)
+
+        mAlarmSettingsFragmentLayout
+            .background = resources.getDrawable(backgroundImageResource!!, resources.newTheme())
+
     }
 
     companion object {

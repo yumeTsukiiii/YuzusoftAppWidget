@@ -25,8 +25,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/mAlarmImage"
-        app:layout_constraintEnd_toStartOf="@id/mAlarmToggleControl"
-        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toStartOf="@id/mAlarmRemoveControl"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
         android:orientation="vertical">
 
@@ -42,10 +42,20 @@
             android:id="@+id/mAlarmDayText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#aaffffff"
+            android:textColor="#eeffffff"
             tools:text="周一、周二、周三"/>
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/mAlarmRemoveControl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_remove_red_24dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/mAlarmToggleControl"
+        android:layout_margin="8dp"/>
 
     <ImageView
         android:id="@+id/mAlarmToggleControl"

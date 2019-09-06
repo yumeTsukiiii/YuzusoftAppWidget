@@ -22,41 +22,38 @@ import kotlinx.coroutines.launch
 /**
  * 该服务用来启动每分钟定时触发的广播，并确保应用程序所发出的任务的执行
  * */
-class TimeInsureService: Service() {
+class TimeAlarmService: Service() {
 
-    private val channelId = "time_insure_service_id"
+    private val channelId = "time_alarm_service_id"
 
-    private val channelName = "time_insure_service_name"
+    private val channelName = "time_alarm_service_name"
 
-    private val notificationId = 1
+    private val notificationId = 2
 
-    private val receiver: MinutesTimerBroadcast = MinutesTimerBroadcast()
+    private val alarmReminder: AlarmReminder by lazy {
+        AlarmReminder(this)
+    }
 
-//    private val alarmReminder: AlarmReminder by lazy {
-//        AlarmReminder(this)
-//    }
-//
-//    private val alarmTaskInterface by lazy {
-//        object : AlarmTaskInterface.Stub() {
-//
-//            override fun updateAlarm(id: Int) {
-//                alarmReminder.updateAlarm(id)
-//            }
-//
-//            override fun newAlarm(id: Int) {
-//                alarmReminder.newAlarm(id)
-//            }
-//
-//            override fun removeAlarm(id: Int) {
-//                alarmReminder.removeAlarm(id)
-//            }
-//
-//        }
-//    }
+    private val alarmTaskInterface by lazy {
+        object : AlarmTaskInterface.Stub() {
+
+            override fun updateAlarm(id: Int) {
+                alarmReminder.updateAlarm(id)
+            }
+
+            override fun newAlarm(id: Int) {
+                alarmReminder.newAlarm(id)
+            }
+
+            override fun removeAlarm(id: Int) {
+                alarmReminder.removeAlarm(id)
+            }
+
+        }
+    }
 
     override fun onBind(intent: Intent?): IBinder? {
-//        return alarmTaskInterface
-        return null
+        return alarmTaskInterface
     }
 
     override fun onCreate() {
@@ -67,27 +64,15 @@ class TimeInsureService: Service() {
         /**开启前台服务*/
         notificationBuilder.apply {
             setContentTitle("柚子小部件")
-            setContentText("正在进行报时监听～通知不见了要重启哦～")
+            setContentText("正在进行闹钟监听～通知不见了要重启哦～")
             setSmallIcon(R.drawable.murasame_icon)
             setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.murasame_icon))
         }.build().also {
             startForeground(notificationId, it)
         }
 
-        /**时钟更新receiver*/
-        registerReceiver(receiver, IntentFilter().apply {
-            addAction(Intent.ACTION_TIME_TICK)
-            addAction(Intent.ACTION_SCREEN_ON)
-            addAction(Intent.ACTION_SCREEN_OFF)
-            //提升优先级，尽可能每分钟能触发任务
-            priority = 1000
-        })
-
-        /**开启整点报时*/
-        TimeReminder.start(this)
-
         /**开启闹钟任务*/
-//        alarmReminder.initAllAlarm()
+        alarmReminder.initAllAlarm()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -96,9 +81,7 @@ class TimeInsureService: Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(receiver)
-        TimeReminder.stop(this)
-//        alarmReminder.removeAllAlarmJob()
+        alarmReminder.removeAllAlarmJob()
         stopForeground(true)
     }
 

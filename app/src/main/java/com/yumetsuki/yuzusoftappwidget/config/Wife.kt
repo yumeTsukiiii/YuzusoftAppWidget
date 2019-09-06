@@ -2,6 +2,9 @@ package com.yumetsuki.yuzusoftappwidget.config
 
 import com.yumetsuki.yuzusoftappwidget.R
 
+/**
+ * 老婆配置
+ * */
 enum class Wife(
     val gameBelong: Game,
     val avatar: Int,

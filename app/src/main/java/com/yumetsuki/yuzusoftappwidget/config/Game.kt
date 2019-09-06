@@ -2,6 +2,9 @@ package com.yumetsuki.yuzusoftappwidget.config
 
 import com.yumetsuki.yuzusoftappwidget.R
 
+/**
+ * 游戏类别
+ * */
 enum class Game(
     val gameName: String,
     val tabImage: Int,

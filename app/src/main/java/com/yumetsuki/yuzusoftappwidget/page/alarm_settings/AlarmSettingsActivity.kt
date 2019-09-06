@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.yumetsuki.yuzusoftappwidget.config.Game
 import com.yumetsuki.yuzusoftappwidget.R
+import com.yumetsuki.yuzusoftappwidget.utils.checkAlarmServiceRunning
+import com.yumetsuki.yuzusoftappwidget.utils.toast
 
 class AlarmSettingsActivity: AppCompatActivity() {
 
@@ -17,6 +19,14 @@ class AlarmSettingsActivity: AppCompatActivity() {
                     getBackgroundImage()
                 )
             ).commit()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!checkAlarmServiceRunning()) {
+            toast("闹钟服务已停止运行")
+            finish()
+        }
     }
 
     private fun getBackgroundImage(): Int {

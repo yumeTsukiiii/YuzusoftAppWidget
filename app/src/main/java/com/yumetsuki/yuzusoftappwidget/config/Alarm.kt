@@ -2,9 +2,12 @@ package com.yumetsuki.yuzusoftappwidget.config
 
 import com.yumetsuki.yuzusoftappwidget.R
 
+/**
+ * 闹钟小徽章
+ * */
 enum class Alarm(
-    name: String,
-    imageResource: Int
+    val alarmName: String,
+    val imageResource: Int
 ) {
 
     Touko("户隐憧子", R.drawable.trophy_25),

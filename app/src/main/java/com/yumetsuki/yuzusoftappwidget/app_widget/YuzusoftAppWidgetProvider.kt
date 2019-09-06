@@ -12,29 +12,30 @@ import android.widget.RemoteViews
 import com.yumetsuki.yuzusoftappwidget.*
 import com.yumetsuki.yuzusoftappwidget.config.Wife
 import com.yumetsuki.yuzusoftappwidget.utils.applicationPref
+import com.yumetsuki.yuzusoftappwidget.utils.toast
 import kotlin.random.Random
 
-
+/**
+ * 老婆小组件，可以戳哦！可以戳哦！可以戳哦！
+ * */
 class YuzusoftAppWidgetProvider: AppWidgetProvider() {
 
     private var player: MediaPlayer? = null
 
     private lateinit var remoteViews: RemoteViews
 
+    //TODO("遗留代码，待优化")
     private var characters = Wife.values().groupBy { wife -> wife.wifeName }.mapValues {
         it.value[0].res.find { wifeClothes ->
             wifeClothes.clothesName == AppContext.applicationPref()
-                .getString(
-                    "${it.value[0].wifeName}${CharacterConfig.clothesSufix}",
-                    it.value[0].res[0].clothesName
-                )
+                .getWifeClothesName(it.value[0].res[0].clothesName)
         }?.run {
             voiceMap to normalImage
         }?: error("no clothes")
     }
 
     /**
-     * 每次窗口小部件被更新都调用一次该方法
+     * 每次窗口小部件被更新都调用一次该方法(被拖出来的时候)
      */
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
@@ -43,7 +44,7 @@ class YuzusoftAppWidgetProvider: AppWidgetProvider() {
         remoteViews = RemoteViews(context.packageName, R.layout.app_widget_layout)
 
 
-        //注册广播
+        //注册点击事件
         val intent = Intent(CLICK_ACTION).apply {
             component = ComponentName(
                 context,
@@ -77,7 +78,6 @@ class YuzusoftAppWidgetProvider: AppWidgetProvider() {
      */
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
-
         when(intent.action) {
             CLICK_ACTION -> {
                 onWidgetClick(context)
@@ -90,45 +90,8 @@ class YuzusoftAppWidgetProvider: AppWidgetProvider() {
     }
 
     /**
-     * 每删除一次窗口小部件就调用一次
-     */
-    override fun onDeleted(context: Context, appWidgetIds: IntArray) {
-        super.onDeleted(context, appWidgetIds)
-    }
-
-    /**
-     * 当最后一个该窗口小部件删除时调用该方法
-     */
-    override fun onDisabled(context: Context) {
-        super.onDisabled(context)
-    }
-
-    /**
-     * 当该窗口小部件第一次添加到桌面时调用该方法
-     */
-    override fun onEnabled(context: Context) {
-        super.onEnabled(context)
-    }
-
-    /**
-     * 当小部件大小改变时
-     */
-    override fun onAppWidgetOptionsChanged(
-        context: Context,
-        appWidgetManager: AppWidgetManager,
-        appWidgetId: Int,
-        newOptions: Bundle
-    ) {
-        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
-    }
-
-    /**
-     * 当小部件从备份恢复时调用该方法
-     */
-    override fun onRestored(context: Context, oldWidgetIds: IntArray, newWidgetIds: IntArray) {
-        super.onRestored(context, oldWidgetIds, newWidgetIds)
-    }
-
+     * 点击老婆时，随机产生反应
+     * */
     private fun onWidgetClick(context: Context) {
         if (!Status.isCharacterPlaying) {
 
@@ -156,6 +119,9 @@ class YuzusoftAppWidgetProvider: AppWidgetProvider() {
 
     }
 
+    /**
+     * 更换角色时触发
+     * */
     private fun onUpdateWife(context: Context) {
 
         characters = Wife.values().groupBy { wife -> wife.wifeName }.mapValues {
@@ -175,6 +141,9 @@ class YuzusoftAppWidgetProvider: AppWidgetProvider() {
         )
     }
 
+    /**
+     * 更新角色立绘
+     * */
     private fun updateRemoteViewImage(context: Context, resourceId: Int) {
 
         if (!this@YuzusoftAppWidgetProvider::remoteViews.isInitialized) {

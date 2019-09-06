@@ -9,6 +9,9 @@ import com.yumetsuki.yuzusoftappwidget.Status
 import com.yumetsuki.yuzusoftappwidget.app_widget.YuzusoftTimeRemindWidgetProvider
 import java.util.Calendar
 
+/**
+ * 该广播用于监听时刻变化
+ * */
 class MinutesTimerBroadcast: BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {

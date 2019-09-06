@@ -8,6 +8,8 @@ object Status {
 
     var isStartTimeReminder by pref(false)
 
+    var isStartAlarmReminder by pref(false)
+
     var isScreenOff by pref(false)
 
 }

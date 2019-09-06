@@ -56,6 +56,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/mAlarmDayLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -71,43 +72,12 @@
                     android:layout_marginStart="8dp"/>
 
                 <TextView
+                    android:id="@+id/mAlarmDayText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="9"
                     android:textColor="#aaffffff"
                     tools:text="每天"
-                    android:gravity="end"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_keyboard_arrow_right_white_24dp"
-                    android:layout_weight="1"/>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="8dp"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:text="@string/choose_voice_text"
-                    android:textColor="@android:color/white"
-                    android:layout_marginStart="8dp"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="9"
-                    android:textColor="#aaffffff"
-                    tools:text="起床啦"
                     android:gravity="end"/>
 
                 <ImageView

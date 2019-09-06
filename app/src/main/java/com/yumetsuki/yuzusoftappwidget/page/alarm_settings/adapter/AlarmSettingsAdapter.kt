@@ -7,14 +7,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.yumetsuki.yuzusoftappwidget.R
 import com.yumetsuki.yuzusoftappwidget.model.AlarmSettingModel
-import com.yumetsuki.yuzusoftappwidget.repo.entity.AlarmSetting
+import com.yumetsuki.yuzusoftappwidget.utils.formatDaysText
+import com.yumetsuki.yuzusoftappwidget.utils.formatTimeText
 import kotlinx.android.synthetic.main.alarm_setting_item.view.*
 import java.util.*
 
 class AlarmSettingsAdapter(
     private val alarmSettings: MutableLiveData<ArrayList<AlarmSettingModel>>,
-    private val onAlarmIconClick: (alarmSetting: AlarmSettingModel) -> Unit,
-    private val onAlarmItemClick: (alarmSetting: AlarmSettingModel) -> Unit
+    private val onAlarmToggleIconClick: (alarmSetting: AlarmSettingModel) -> Unit,
+    private val onAlarmItemClick: (alarmSetting: AlarmSettingModel) -> Unit,
+    private val onAlarmRemoveIconClick: (alarmSetting: AlarmSettingModel) -> Unit
 ): RecyclerView.Adapter<AlarmSettingsAdapter.AlarmSettingsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmSettingsViewHolder {
@@ -41,8 +43,20 @@ class AlarmSettingsAdapter(
 
                 mAlarmDayText.text = buildDaysText(alarmSetting)
 
+                mAlarmToggleControl.setImageResource(
+                    if (alarmSetting.alarmSetting.isEnable) {
+                        R.drawable.ic_alarm_on_pink_24dp
+                    } else {
+                        R.drawable.ic_alarm_off_pink_24dp
+                    }
+                )
+
                 mAlarmToggleControl.setOnClickListener {
-                    onAlarmIconClick(alarmSetting)
+                    onAlarmToggleIconClick(alarmSetting)
+                }
+
+                mAlarmRemoveControl.setOnClickListener {
+                    onAlarmRemoveIconClick(alarmSetting)
                 }
 
                 mAlarmSettingsItemLayout.setOnClickListener {
@@ -54,62 +68,10 @@ class AlarmSettingsAdapter(
     }
 
     private fun buildTimeText(alarmSetting: AlarmSettingModel): String {
-        return alarmSetting.alarmSetting.run {
-            "${
-            if (alarmHour > 12) {
-                alarmHour - 12
-            } else {
-                alarmHour
-            }
-            }:$alarmMinute ${
-            if (alarmHour > 12) {
-                "pm"
-            } else {
-                "am"
-            }
-            }"
-        }
+        return alarmSetting.formatTimeText()
     }
 
     private fun buildDaysText(alarmSetting: AlarmSettingModel): String {
-        return if (
-            alarmSetting.days.size == 2
-            && alarmSetting.days.map { it.day }.containsAll(listOf(6, 7))
-        ) {
-            "双休"
-        } else if (
-            alarmSetting.days.size == 7
-        ) {
-            "每天"
-        } else {
-            alarmSetting.days.joinToString("、") {
-                when(it.day) {
-                    1 -> {
-                        "周一"
-                    }
-                    2 -> {
-                        "周二"
-                    }
-                    3 -> {
-                        "周三"
-                    }
-                    4 -> {
-                        "周四"
-                    }
-                    5 -> {
-                        "周五"
-                    }
-                    6 -> {
-                        "周六"
-                    }
-                    7 -> {
-                        "周日"
-                    }
-                    else -> {
-                        ""
-                    }
-                }
-            }
-        }
+        return alarmSetting.formatDaysText()
     }
 }

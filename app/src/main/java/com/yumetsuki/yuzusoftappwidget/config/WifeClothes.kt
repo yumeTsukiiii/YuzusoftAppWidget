@@ -2,6 +2,9 @@ package com.yumetsuki.yuzusoftappwidget.config
 
 import com.yumetsuki.yuzusoftappwidget.R
 
+/**
+ * 老婆衣服配置，会对应触发的语音
+ * */
 enum class WifeClothes(
     val clothesName: String,
     val voiceMap: List<Pair<Int, Int>>,

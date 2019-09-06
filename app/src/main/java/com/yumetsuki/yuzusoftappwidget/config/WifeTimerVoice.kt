@@ -2,6 +2,9 @@ package com.yumetsuki.yuzusoftappwidget.config
 
 import com.yumetsuki.yuzusoftappwidget.R
 
+/**
+ * 老婆语音报时配置
+ * */
 enum class WifeTimerVoice(
     val morning: Int,
     val afternoon: Int,

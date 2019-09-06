@@ -13,4 +13,6 @@
     <string name="choose_voice_text">选择老婆音</string>
     <string name="add_alarm_tip_text">赶快添加闹钟吧！</string>
     <string name="add_alarm_menu_item_text">添加闹钟</string>
+    <string name="complete_text">完成</string>
+    <string name="long_click_unlock_text">长按小徽章解锁</string>
 </resources>
