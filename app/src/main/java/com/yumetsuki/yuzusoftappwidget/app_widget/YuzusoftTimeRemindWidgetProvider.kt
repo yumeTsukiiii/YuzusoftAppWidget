@@ -69,6 +69,7 @@ class YuzusoftTimeRemindWidgetProvider: AppWidgetProvider() {
     override fun onDisabled(context: Context) {
         super.onDisabled(context)
         Status.isStartTimeReminder = false
+        Status.isStartAlarmReminder = false
         context.stopService(
             Intent(
                 context,
