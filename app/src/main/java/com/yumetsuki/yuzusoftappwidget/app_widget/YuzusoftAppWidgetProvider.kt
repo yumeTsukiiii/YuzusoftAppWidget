@@ -28,7 +28,7 @@ class YuzusoftAppWidgetProvider: AppWidgetProvider() {
     private var characters = Wife.values().groupBy { wife -> wife.wifeName }.mapValues {
         it.value[0].res.find { wifeClothes ->
             wifeClothes.clothesName == AppContext.applicationPref()
-                .getWifeClothesName(it.value[0].res[0].clothesName)
+                .getWifeClothesName(it.value[0].wifeName)
         }?.run {
             voiceMap to normalImage
         }?: error("no clothes")
