@@ -17,69 +17,27 @@ class TimerVoiceWorker(
 
     override suspend fun doWork(): Result {
 
+        val isServiceRunning = Status.isStartTimeReminder
+
         val calendar = Calendar.getInstance()
 
-        if (calendar[Calendar.MINUTE] <= 5) {
-            playVoiceAtTime(applicationContext)
+        if (calendar[Calendar.MINUTE] <= 5 && isServiceRunning) {
+            TimeReminder.playVoiceAtTime(applicationContext)
         }
 
-        WorkManager.getInstance(applicationContext)
-            .enqueue(
-                OneTimeWorkRequestBuilder<TimerVoiceWorker>()
-                    .addTag(TAG)
-                    .setInitialDelay(
-                        ((60 - calendar[Calendar.SECOND]) + (59 - calendar[Calendar.MINUTE]) * 60).toLong(),
-                        TimeUnit.SECONDS
-                    ).build()
-            )
+        if (isServiceRunning) {
+            WorkManager.getInstance(applicationContext)
+                .enqueue(
+                    OneTimeWorkRequestBuilder<TimerVoiceWorker>()
+                        .addTag(TAG)
+                        .setInitialDelay(
+                            ((60 - calendar[Calendar.SECOND]) + (59 - calendar[Calendar.MINUTE]) * 60).toLong(),
+                            TimeUnit.SECONDS
+                        ).build()
+                )
+        }
 
         return Result.success()
-    }
-
-    private suspend fun playVoiceAtTime(context: Context) {
-
-        Wife.values().find { it.wifeName == CharacterConfig.mostLikeWife }?.let { wife ->
-
-            Calendar.getInstance().apply {
-
-                Status.isCharacterPlaying = true
-
-                context.playMediaSequenceAsync {
-
-                    yield(
-                        if (get(Calendar.HOUR_OF_DAY) > 12) {
-                            wife.timerVoice.afternoon
-                        } else {
-                            wife.timerVoice.morning
-                        }
-                    )
-
-                    yield(
-                        wife.timerVoice.hours[
-                                if (get(Calendar.HOUR) == 0) {
-                                    11
-                                } else {
-                                    get(Calendar.HOUR) - 1
-                                }
-                        ]
-                    )
-
-                    yieldAll(
-                        wife.timerVoice.minutes[get(Calendar.MINUTE)]
-                    )
-
-                    yield(
-                        wife.timerVoice.desu
-                    )
-
-                }.collect()
-
-                Status.isCharacterPlaying = false
-
-            }
-
-        }?: error("no wife")
-
     }
 
     companion object {
