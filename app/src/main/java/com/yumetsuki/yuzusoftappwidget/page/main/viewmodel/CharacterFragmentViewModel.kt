@@ -29,7 +29,7 @@ class CharacterFragmentViewModel: ViewModel() {
     }
 
     fun updateMostLikeWife(context: Context) {
-        CharacterConfig.mostLikeWife = wife.value!!.wifeName
+        CharacterConfig.mostLikeWifeName = wife.value!!.wifeName
         updateWidget(context)
     }
 

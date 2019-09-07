@@ -1,7 +1,6 @@
 package com.yumetsuki.yuzusoftappwidget.app_widget
 
 import android.appwidget.AppWidgetProvider
-import android.os.Bundle
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.app.PendingIntent
@@ -12,7 +11,9 @@ import android.widget.RemoteViews
 import com.yumetsuki.yuzusoftappwidget.*
 import com.yumetsuki.yuzusoftappwidget.config.Wife
 import com.yumetsuki.yuzusoftappwidget.utils.applicationPref
-import com.yumetsuki.yuzusoftappwidget.utils.toast
+import com.yumetsuki.yuzusoftappwidget.utils.playMediaAsync
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 /**
@@ -20,19 +21,7 @@ import kotlin.random.Random
  * */
 class YuzusoftAppWidgetProvider: AppWidgetProvider() {
 
-    private var player: MediaPlayer? = null
-
     private lateinit var remoteViews: RemoteViews
-
-    //TODO("遗留代码，待优化")
-    private var characters = Wife.values().groupBy { wife -> wife.wifeName }.mapValues {
-        it.value[0].res.find { wifeClothes ->
-            wifeClothes.clothesName == AppContext.applicationPref()
-                .getWifeClothesName(it.value[0].wifeName)
-        }?.run {
-            voiceMap to normalImage
-        }?: error("no clothes")
-    }
 
     /**
      * 每次窗口小部件被更新都调用一次该方法(被拖出来的时候)
@@ -65,7 +54,7 @@ class YuzusoftAppWidgetProvider: AppWidgetProvider() {
         )
 
         remoteViews.setImageViewResource(R.id.yuzusoft_charactor_image_view,
-            (characters[CharacterConfig.mostLikeWife] ?: error("no charactar")).second)
+            CharacterConfig.getMostLikeWifeWithClothes().second.normalImage)
 
         //对所有该应用的小部件进行刷新
         for (appWidgetId in appWidgetIds) {
@@ -97,24 +86,23 @@ class YuzusoftAppWidgetProvider: AppWidgetProvider() {
 
             Status.isCharacterPlaying = true
 
-            characters[CharacterConfig.mostLikeWife]?.also { wifeEnum ->
-                wifeEnum.first[Random.nextInt(0, wifeEnum.first.size)].apply {
+            CharacterConfig.getMostLikeWifeWithClothes().also { (_, clothes) ->
 
-                    updateRemoteViewImage(context, first)
+                val randomReaction = clothes.voiceMap[
+                        Random.nextInt(0, clothes.voiceMap.size)
+                ]
 
-                    player = MediaPlayer.create(context, second)
+                updateRemoteViewImage(context, randomReaction.first)
 
-                    player?.setOnCompletionListener {
-                        updateRemoteViewImage(context, wifeEnum.second)
-                        Status.isCharacterPlaying = false
-                        player?.stop()
-                        player?.release()
-                        player = null
-                    }
-
-                    player?.start()
+                GlobalScope.launch {
+                    context.playMediaAsync(
+                        randomReaction.second
+                    ).await()
+                    Status.isCharacterPlaying = false
+                    updateRemoteViewImage(context, clothes.normalImage)
                 }
             }
+
         }
 
     }
@@ -124,20 +112,9 @@ class YuzusoftAppWidgetProvider: AppWidgetProvider() {
      * */
     private fun onUpdateWife(context: Context) {
 
-        characters = Wife.values().groupBy { wife -> wife.wifeName }.mapValues {
-            it.value[0].res.find { wifeClothes ->
-                wifeClothes.clothesName == AppContext.applicationPref()
-                    .getString(
-                        "${it.value[0].wifeName}${CharacterConfig.clothesSufix}",
-                        it.value[0].res[0].clothesName
-                    )
-            }?.run {
-                voiceMap to normalImage
-            }?: error("no clothes")
-        }
-
-        updateRemoteViewImage(context,
-            (characters[CharacterConfig.mostLikeWife] ?: error("2333")).second
+        updateRemoteViewImage(
+            context,
+            CharacterConfig.getMostLikeWifeWithClothes().second.normalImage
         )
     }
 

@@ -118,7 +118,7 @@ class CharacterFragment: Fragment() {
 
             //该角色已经被选中了
             mConfirmCharacterBtn.isEnabled =
-                viewModel.wife.value!!.wifeName != CharacterConfig.mostLikeWife
+                viewModel.wife.value!!.wifeName != CharacterConfig.mostLikeWifeName
             mConfirmCharacterBtn.text = if (mConfirmCharacterBtn.isEnabled) {
                 "选中角色"
             } else {

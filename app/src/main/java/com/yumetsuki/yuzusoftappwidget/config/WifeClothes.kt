@@ -7,7 +7,7 @@ import com.yumetsuki.yuzusoftappwidget.R
  * */
 enum class WifeClothes(
     val clothesName: String,
-    val voiceMap: List<Pair<Int, Int>>,
+    val voiceMap: List<Pair<Int, Int>>, //first为立绘资源，second为音频资源
     val normalImage: Int
 ) {
 

@@ -5,16 +5,11 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.app.KeyguardManager
 import android.app.Service
-import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
-import android.content.ServiceConnection
-import android.media.MediaPlayer
 import android.os.*
 import android.os.VibrationEffect.DEFAULT_AMPLITUDE
 import androidx.appcompat.app.AppCompatActivity
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.core.animation.doOnEnd
 import com.yumetsuki.yuzusoftappwidget.*
 import com.yumetsuki.yuzusoftappwidget.config.Wife
@@ -22,13 +17,8 @@ import com.yumetsuki.yuzusoftappwidget.model.AlarmSettingModel
 import com.yumetsuki.yuzusoftappwidget.service.TimeReminder
 import com.yumetsuki.yuzusoftappwidget.utils.applicationPref
 import com.yumetsuki.yuzusoftappwidget.utils.formatTimeText
-import com.yumetsuki.yuzusoftappwidget.utils.playMediaAsync
-import com.yumetsuki.yuzusoftappwidget.utils.playMediaSequenceAsync
 import kotlinx.android.synthetic.main.activity_alarm_lock.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
-import java.sql.Time
-import java.util.*
 
 class AlarmLockActivity : AppCompatActivity() {
 
@@ -59,7 +49,7 @@ class AlarmLockActivity : AppCompatActivity() {
             ALARM_SETTING_MODEL_EXTRA
         )
 
-        val wife = Wife.values().find { it.wifeName == CharacterConfig.mostLikeWife }!!
+        val wife = Wife.values().find { it.wifeName == CharacterConfig.mostLikeWifeName }!!
 
         mLockTimeText.text = alarmSettingModel.formatTimeText()
 

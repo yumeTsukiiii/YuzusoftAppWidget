@@ -3,10 +3,7 @@ package com.yumetsuki.yuzusoftappwidget.page.main
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
-import android.app.ActivityManager
-import android.content.Context
 import android.content.Intent
-import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -27,15 +24,8 @@ import com.yumetsuki.yuzusoftappwidget.page.alarm_settings.AlarmSettingsActivity
 import com.yumetsuki.yuzusoftappwidget.page.main.adapter.CharacterViewPagerAdapter
 import com.yumetsuki.yuzusoftappwidget.page.main.fragments.CharacterFragment
 import com.yumetsuki.yuzusoftappwidget.page.main.viewmodel.MainViewModel
-import com.yumetsuki.yuzusoftappwidget.service.TimeReminder
 import com.yumetsuki.yuzusoftappwidget.utils.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.count
-import kotlinx.coroutines.launch
 import java.lang.Exception
 import java.util.*
 import kotlin.system.exitProcess
@@ -231,7 +221,7 @@ class MainActivity : AppCompatActivity() {
                 it.gameBelong.gameName == gameName
             }.run {
                 sortedBy {
-                    if (it.wifeName == CharacterConfig.mostLikeWife) {
+                    if (it.wifeName == CharacterConfig.mostLikeWifeName) {
                         0
                     } else {
                         1
@@ -302,8 +292,8 @@ class MainActivity : AppCompatActivity() {
     private fun initClothesStatus() {
         Wife.values().forEach {
             applicationPref().apply {
-                getString("${it.wifeName}${CharacterConfig.clothesSufix}", "")
-                    ?.also { clothes ->
+                getWifeClothesName(it.wifeName)
+                    .also { clothes ->
                         if (clothes.isEmpty()) {
                             putWifeClothes(it.wifeName, it.res[0].clothesName)
                         }

@@ -84,7 +84,7 @@ class TimeInsureService: Service() {
         })
 
         /**开启整点报时*/
-        TimeReminder.start(this)
+        TimeReminder.start(applicationContext)
 
         /**开启闹钟任务*/
 //        alarmReminder.initAllAlarm()
@@ -97,7 +97,7 @@ class TimeInsureService: Service() {
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(receiver)
-        TimeReminder.stop(this)
+        TimeReminder.stop(applicationContext)
 //        alarmReminder.removeAllAlarmJob()
         stopForeground(true)
     }

@@ -26,7 +26,6 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
             if (variant.buildType.name == "debug") {
-                variant.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath + "/outputs")
                 output.outputFileName = "柚子小部件_开发版.apk"
             }
         }

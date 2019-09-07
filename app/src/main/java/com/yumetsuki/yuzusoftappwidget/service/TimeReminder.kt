@@ -1,14 +1,12 @@
 package com.yumetsuki.yuzusoftappwidget.service
 
 import android.content.Context
-import android.widget.Toast
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.yumetsuki.yuzusoftappwidget.CharacterConfig
 import com.yumetsuki.yuzusoftappwidget.Status
 import com.yumetsuki.yuzusoftappwidget.config.Wife
 import com.yumetsuki.yuzusoftappwidget.utils.playMediaSequenceAsync
-import com.yumetsuki.yuzusoftappwidget.utils.toast
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import java.util.*
@@ -55,7 +53,7 @@ object TimeReminder {
 
     suspend fun playVoiceAtTime(context: Context) {
 
-        Wife.values().find { it.wifeName == CharacterConfig.mostLikeWife }?.let { wife ->
+        Wife.values().find { it.wifeName == CharacterConfig.mostLikeWifeName }?.let { wife ->
 
             Calendar.getInstance().apply {
 

@@ -31,7 +31,7 @@ class TimeAlarmService: Service() {
     private val notificationId = 2
 
     private val alarmReminder: AlarmReminder by lazy {
-        AlarmReminder(this)
+        AlarmReminder(applicationContext)
     }
 
     private val alarmTaskInterface by lazy {
