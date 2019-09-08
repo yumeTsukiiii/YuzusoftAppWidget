@@ -12,8 +12,9 @@ import com.yumetsuki.yuzusoftappwidget.*
 import com.yumetsuki.yuzusoftappwidget.config.Wife
 import com.yumetsuki.yuzusoftappwidget.utils.applicationPref
 import com.yumetsuki.yuzusoftappwidget.utils.playMediaAsync
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.yumetsuki.yuzusoftappwidget.utils.toast
+import kotlinx.coroutines.*
+import java.util.concurrent.FutureTask
 import kotlin.random.Random
 
 /**
@@ -95,9 +96,11 @@ class YuzusoftAppWidgetProvider: AppWidgetProvider() {
                 updateRemoteViewImage(context, randomReaction.first)
 
                 GlobalScope.launch {
+
                     context.playMediaAsync(
                         randomReaction.second
                     ).await()
+
                     Status.isCharacterPlaying = false
                     updateRemoteViewImage(context, clothes.normalImage)
                 }
