@@ -33,6 +33,7 @@ class YuzusoftAppWidgetProvider: AppWidgetProvider() {
         //创建远程视图
         remoteViews = RemoteViews(context.packageName, R.layout.app_widget_layout)
 
+        remoteViews
 
         //注册点击事件
         val intent = Intent(CLICK_ACTION).apply {
@@ -134,6 +135,7 @@ class YuzusoftAppWidgetProvider: AppWidgetProvider() {
             R.id.yuzusoft_charactor_image_view,
             resourceId
         )
+
 
         val componentName = ComponentName(context, YuzusoftAppWidgetProvider::class.java)
         AppWidgetManager.getInstance(context)

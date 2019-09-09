@@ -45,7 +45,8 @@ enum class Wife(
         Game.DracuRiot,
         R.drawable.atsusa_icon, "atsusa", "布良梓",
         listOf(
-            WifeClothes.AtsusaSeifuku
+            WifeClothes.AtsusaSeifuku,
+            WifeClothes.AtsusaCommon
         ),
         WifeTimerVoice.Atsusa
     )

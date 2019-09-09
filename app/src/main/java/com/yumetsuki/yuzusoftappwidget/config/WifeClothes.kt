@@ -73,5 +73,12 @@ enum class WifeClothes(
         R.drawable.atsusa_question_front to R.raw.az_touch_02,
         R.drawable.atsusa_bikuri_front to R.raw.az_touch_03
     ), R.drawable.atsusa_normal
+    ),
+    AtsusaCommon("常服", listOf(
+        R.drawable.atsusa_kodomo_common_01 to R.raw.az_touch_01,
+        R.drawable.atsusa_kodomo_common_02_front to R.raw.az_touch_01,
+        R.drawable.atsusa_question_common_front to R.raw.az_touch_02,
+        R.drawable.atsusa_bikuri_common_front to R.raw.az_touch_03
+    ), R.drawable.atsusa_common_normal
     )
 }
