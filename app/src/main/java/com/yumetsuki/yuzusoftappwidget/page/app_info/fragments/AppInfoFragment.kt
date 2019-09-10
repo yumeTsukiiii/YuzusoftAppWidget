@@ -35,7 +35,9 @@ class AppInfoFragment : Fragment() {
 
             (activity!! as AppCompatActivity).apply {
                 setSupportActionBar(mAboutAppToolbar)
-                supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+                mAboutAppToolbar.setNavigationOnClickListener {
+                    finish()
+                }
             }
 
             initTextFont()

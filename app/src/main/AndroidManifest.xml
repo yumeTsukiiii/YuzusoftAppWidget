@@ -17,17 +17,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity android:name=".page.app_info.AppInfoActivity"
             android:parentActivityName=".page.main.MainActivity"/>
+
         <activity
             android:name=".page.alarm_lock.AlarmLockActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:taskAffinity="com.yumetsuki.yuzusoftappwidget.alarm_lock" />
+
         <activity
             android:name=".page.alarm_setting_modify.AlarmSettingModifyActivity"
             android:parentActivityName=".page.alarm_settings.AlarmSettingsActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".page.main.MainActivity"
             android:screenOrientation="portrait">
@@ -37,6 +41,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".page.alarm_settings.AlarmSettingsActivity"
             android:parentActivityName=".page.main.MainActivity"

@@ -64,4 +64,9 @@ class CharacterFragmentViewModel: ViewModel() {
         })
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        stopPlayCharacterMusic()
+    }
+
 }
