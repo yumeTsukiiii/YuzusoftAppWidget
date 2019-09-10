@@ -29,12 +29,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageButton
-                    android:id="@+id/mPreviousGameBtn"
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@android:color/transparent"
                     android:src="@drawable/ic_keyboard_arrow_left_white_24dp"
+                    android:layout_gravity="center_vertical|start"/>
+
+                <ImageButton
+                    android:id="@+id/mPreviousGameBtn"
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="?attr/actionBarSize"
+                    android:scaleType="centerCrop"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/nene_arrow_left"
                     android:layout_gravity="center_vertical|start"
                     android:layout_marginStart="8dp"/>
 
@@ -46,12 +53,19 @@
 
                 <ImageButton
                     android:id="@+id/mNextGameBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="?attr/actionBarSize"
                     android:backgroundTint="@android:color/transparent"
-                    android:src="@drawable/ic_keyboard_arrow_right_white_24dp"
+                    android:src="@drawable/nene_arrow_right"
+                    android:scaleType="centerCrop"
                     android:layout_gravity="center_vertical|end"
                     android:layout_marginEnd="8dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_keyboard_arrow_right_white_24dp"
+                    android:layout_gravity="center_vertical|end"/>
 
             </FrameLayout>
 
@@ -91,7 +105,6 @@
         android:visibility="gone"
         android:src="@drawable/ic_alarm_white_24dp"/>
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/mMenuActionExpendBtn"
         android:layout_width="wrap_content"
@@ -101,5 +114,12 @@
         android:src="@drawable/ic_menu_white_24dp"
         android:layout_margin="16dp"
         app:fabSize="mini"/>
+
+    <FrameLayout
+        android:id="@+id/mGameChangingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

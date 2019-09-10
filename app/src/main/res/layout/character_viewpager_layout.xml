@@ -15,30 +15,46 @@
 
     </ImageView>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+    <ImageView
+        android:id="@+id/mWifeAvatar"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        tools:src="@drawable/yoshino_icon"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="8dp"
-        android:gravity="center">
+        android:layout_margin="8dp"/>
 
-        <ImageView
-            android:id="@+id/mWifeAvatar"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            tools:src="@drawable/yoshino_icon"/>
+    <ImageView
+        android:id="@+id/mWifeMusicIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_music_note_white_24dp"
+        app:layout_constraintStart_toEndOf="@id/mWifeAvatar"
+        app:layout_constraintTop_toTopOf="@id/mWifeAvatar"
+        app:layout_constraintBottom_toBottomOf="@id/mWifeAvatar"
+        android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/mWifeName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="朝武芳乃"
-            android:textColor="#fff"
-            android:textSize="20sp"/>
+    <ImageView
+        android:id="@+id/mWifeMusicAnimationIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_music_note_white_24dp"
+        app:layout_constraintStart_toEndOf="@id/mWifeAvatar"
+        app:layout_constraintTop_toTopOf="@id/mWifeAvatar"
+        app:layout_constraintBottom_toBottomOf="@id/mWifeAvatar"
+        android:visibility="gone"/>
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/mWifeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="朝武芳乃"
+        android:textColor="#fff"
+        android:layout_marginTop="8dp"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/mWifeAvatar"
+        app:layout_constraintStart_toStartOf="@id/mWifeAvatar"
+        app:layout_constraintEnd_toEndOf="@id/mWifeAvatar" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -62,6 +78,7 @@
             android:layout_height="wrap_content"
             android:textColor="#fff"
             tools:text="巫女服"
+            android:textSize="18sp"
             android:layout_margin="8dp"/>
 
         <ImageButton
@@ -77,6 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/choose_clothes_text"
+            android:textSize="18sp"
             android:textColor="#fff"/>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -85,6 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/choose_character_text"
+            android:textSize="18sp"
             android:textColor="#fff"/>
 
     </LinearLayout>

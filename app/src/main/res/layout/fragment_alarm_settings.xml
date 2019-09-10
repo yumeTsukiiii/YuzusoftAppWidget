@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
-            app:title="闹钟设置"
+            app:title="@string/alarm_settings_appbar_title"
             app:titleTextColor="@android:color/white"/>
 
     </com.google.android.material.appbar.AppBarLayout>

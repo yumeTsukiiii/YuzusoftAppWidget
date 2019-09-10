@@ -15,4 +15,36 @@
     <string name="add_alarm_menu_item_text">添加闹钟</string>
     <string name="complete_text">完成</string>
     <string name="long_click_unlock_text">长按小徽章解锁</string>
+    <string name="about_app_text">关于应用</string>
+    <string name="about_app_content">\u3000
+        1. 本应用为开源软件，且未在应用商店发布，应用的更新将会在本应用的Github仓库进行。
+        \n\u3000
+        2. 仓库地址: https://github.com/yumeTsukiiii/YuzusoftAppWidget
+        \n\u3000
+        3. 通常安装新版本的应用程序，不需要卸载原程序，如有特殊情况，作者将会在Github上进行说明
+        \n\u3000
+        4. 应用的使用，参考作者在bilibili上发布的视频。
+    </string>
+    <string name="about_author_text">关于作者</string>
+    <string name="abount_author_content">\u3000
+        某高校三年生，爱好编程、吉他，资深(?)柚子厨
+        \n\u3000
+        作者的bilibili账号: Yajusoftの梦月
+        \n\u3000
+        作者经常修福报，所以，无论什么要求，作者都会好好听的
+    </string>
+    <string name="onegai_text">请多多支持！</string>
+    <string name="enegai_content">\u3000
+        作者将会持续更新该应用，如果大家喜欢，希望大家:
+        \n\u3000
+        1. 关注作者的bilibili账号: 见上方
+        \n\u3000
+        2. Star作者该应用的Github仓库: 见上方
+        \n\u3000
+        3. 加入QQ反馈群提出各种各样程序员讨厌的需求: 488687641
+        \n\u3000
+        4. 梦月爱你们！
+    </string>
+    <string name="app_info_appbar_title">应用说明</string>
+    <string name="alarm_settings_appbar_title">闹钟设置</string>
 </resources>

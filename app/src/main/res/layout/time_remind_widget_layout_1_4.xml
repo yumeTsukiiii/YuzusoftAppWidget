@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="40dp"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:background="#000"
+    android:elevation="5dp">
+
+    <TextView
+        android:id="@+id/time_text"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:textAlignment="center"
+        tools:text="上午\n\n 20 \n 点 \n 30分"
+        android:layout_marginTop="16dp"
+        android:layout_weight="6"
+        android:gravity="center_vertical"/>
+
+    <ImageButton
+        android:backgroundTint="#00ffffff"
+        android:id="@+id/time_remind_controller"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        tools:src="@drawable/ic_volume_up_pink_24dp"
+        android:layout_weight="1"/>
+
+    <ImageButton
+        android:backgroundTint="#00ffffff"
+        android:id="@+id/alarm_remind_controller"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        tools:src="@drawable/ic_alarm_on_pink_24dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.yumetsuki.yuzusoftappwidget.page.alarm_settings
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -52,7 +53,16 @@ class AlarmSettingsFragment: Fragment() {
             initViewModel()
 
             initView()
+
+            initTextFont()
         }
+    }
+
+    /**
+     * 设置字体样式
+     * */
+    private fun View.initTextFont() {
+        mNoAlarmTipText.typeface = Typeface.createFromAsset(context.assets, "fonts/简哈哈.ttf")
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

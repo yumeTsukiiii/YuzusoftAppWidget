@@ -11,7 +11,9 @@ enum class Wife(
     val wifeName: String,
     val chineseTransName: String,
     val res: List<WifeClothes>,
-    val timerVoice: WifeTimerVoice
+    val timerVoice: WifeTimerVoice,
+    val appEndVoice: Int,
+    val characterMusic: Int
 ) {
 
     Yoshino(
@@ -21,7 +23,9 @@ enum class Wife(
             WifeClothes.YoshinoWitch,
             WifeClothes.YoshinoSeifuku
         ),
-        WifeTimerVoice.Yoshino
+        WifeTimerVoice.Yoshino,
+        R.raw.yos_end,
+        R.raw.yoshino_character_music
     ),
     Mako(
         Game.Senrenbanka,
@@ -30,7 +34,9 @@ enum class Wife(
             WifeClothes.MakoNinja,
             WifeClothes.MakoSeifuku
         ),
-        WifeTimerVoice.Mako
+        WifeTimerVoice.Mako,
+        R.raw.mak_end,
+        R.raw.mako_character_music
     ),
     Murasame(
         Game.Senrenbanka,
@@ -39,7 +45,9 @@ enum class Wife(
             WifeClothes.MurasameWitch,
             WifeClothes.MurasameSeifuku
         ),
-        WifeTimerVoice.Murasame
+        WifeTimerVoice.Murasame,
+        R.raw.mur_end,
+        R.raw.murasame_character_music
     ),
     Atsusa(
         Game.DracuRiot,
@@ -48,6 +56,8 @@ enum class Wife(
             WifeClothes.AtsusaSeifuku,
             WifeClothes.AtsusaCommon
         ),
-        WifeTimerVoice.Atsusa
+        WifeTimerVoice.Atsusa,
+        R.raw.az_end,
+        R.raw.atsusa_character_music
     )
 }

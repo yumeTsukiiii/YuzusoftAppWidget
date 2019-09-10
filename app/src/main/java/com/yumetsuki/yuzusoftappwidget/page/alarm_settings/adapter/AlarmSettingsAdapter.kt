@@ -1,5 +1,6 @@
 package com.yumetsuki.yuzusoftappwidget.page.alarm_settings.adapter
 
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +38,9 @@ class AlarmSettingsAdapter(
 
         fun bind(alarmSetting: AlarmSettingModel) {
             itemView.apply {
+
+                initTextFont()
+
                 mAlarmImage.setImageResource(alarmSetting.alarmSetting.icon)
 
                 mAlarmTimeText.text = buildTimeText(alarmSetting)
@@ -65,6 +69,10 @@ class AlarmSettingsAdapter(
             }
         }
 
+    }
+
+    private fun View.initTextFont() {
+        mAlarmTimeText.typeface = Typeface.createFromAsset(context.assets, "fonts/简哈哈.ttf")
     }
 
     private fun buildTimeText(alarmSetting: AlarmSettingModel): String {

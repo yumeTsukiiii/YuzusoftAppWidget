@@ -5,8 +5,8 @@
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".App"
@@ -17,27 +17,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <activity android:name=".page.alarm_lock.AlarmLockActivity"
-            android:taskAffinity="com.yumetsuki.yuzusoftappwidget.alarm_lock"
+        <activity android:name=".page.app_info.AppInfoActivity"
+            android:parentActivityName=".page.main.MainActivity"/>
+        <activity
+            android:name=".page.alarm_lock.AlarmLockActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
-            android:exported="false"/>
-
+            android:taskAffinity="com.yumetsuki.yuzusoftappwidget.alarm_lock" />
         <activity
             android:name=".page.alarm_setting_modify.AlarmSettingModifyActivity"
-            android:parentActivityName=".page.alarm_settings.AlarmSettingsActivity" />
-
-        <activity android:name=".page.main.MainActivity">
+            android:parentActivityName=".page.alarm_settings.AlarmSettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".page.main.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".page.alarm_settings.AlarmSettingsActivity"
-            android:parentActivityName=".page.main.MainActivity" />
+            android:parentActivityName=".page.main.MainActivity"
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".app_widget.YuzusoftAppWidgetProvider"
@@ -53,7 +56,6 @@
                 <action android:name="com.yumetsuki.yuzusoftappwidget.action.UPDATE" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".app_widget.YuzusoftTimeRemindWidgetProvider"
             android:label="报时小部件">
@@ -66,7 +68,24 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="com.yumetsuki.yuzusoftappwidget.action.TIME_REMIND_CLICK" />
                 <action android:name="com.yumetsuki.yuzusoftappwidget.action.TIME_REMIND_UPDATE" />
-                <action android:name="com.yumetsuki.yuzusoftappwidget.action.ALARM_REMIND_CLICK"/>
+                <action android:name="com.yumetsuki.yuzusoftappwidget.action.ALARM_REMIND_CLICK" />
+                <action android:name="android.intent.action.SCREEN_ON" />
+                <action android:name="android.intent.action.SCREEN_OFF" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".app_widget.YuzusoftTimeRemindWidgetProviderOneToFour"
+            android:label="报时小部件">
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/time_remind_widget_provider_info_1_4" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.yumetsuki.yuzusoftappwidget.action.TIME_REMIND_CLICK" />
+                <action android:name="com.yumetsuki.yuzusoftappwidget.action.TIME_REMIND_UPDATE" />
+                <action android:name="com.yumetsuki.yuzusoftappwidget.action.ALARM_REMIND_CLICK" />
                 <action android:name="android.intent.action.SCREEN_ON" />
                 <action android:name="android.intent.action.SCREEN_OFF" />
             </intent-filter>
@@ -77,18 +96,17 @@
             android:process=":remoteTimeInsure">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="com.yumetsuki.yuzusoftappwidget.service.TimeInsureService"/>
+                <action android:name="com.yumetsuki.yuzusoftappwidget.service.TimeInsureService" />
             </intent-filter>
         </service>
-
-        <service android:name=".service.TimeAlarmService"
+        <service
+            android:name=".service.TimeAlarmService"
             android:process=":remoteTimeAlarm">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="com.yumetsuki.yuzusoftappwidget.service.TimeAlarmService"/>
+                <action android:name="com.yumetsuki.yuzusoftappwidget.service.TimeAlarmService" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

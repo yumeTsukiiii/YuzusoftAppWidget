@@ -136,7 +136,6 @@ class YuzusoftAppWidgetProvider: AppWidgetProvider() {
             resourceId
         )
 
-
         val componentName = ComponentName(context, YuzusoftAppWidgetProvider::class.java)
         AppWidgetManager.getInstance(context)
             .updateAppWidget(componentName, remoteViews)

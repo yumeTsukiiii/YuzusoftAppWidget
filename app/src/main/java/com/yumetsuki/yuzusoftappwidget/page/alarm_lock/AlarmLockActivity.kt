@@ -6,6 +6,7 @@ import android.animation.ValueAnimator
 import android.app.KeyguardManager
 import android.app.Service
 import android.content.Context
+import android.graphics.Typeface
 import android.os.*
 import android.os.VibrationEffect.DEFAULT_AMPLITUDE
 import androidx.appcompat.app.AppCompatActivity
@@ -53,6 +54,7 @@ class AlarmLockActivity : AppCompatActivity() {
 
         mLockTimeText.text = alarmSettingModel.formatTimeText()
 
+
         mLockActivityLayout.background = resources.getDrawable(
             wife.gameBelong.backgroundImage,
             resources.newTheme()
@@ -69,9 +71,11 @@ class AlarmLockActivity : AppCompatActivity() {
         )
 
         mLockControlBtn.setOnLongClickListener {
-            lock()
+            unlock()
             true
         }
+
+        mLockTipText.typeface = Typeface.createFromAsset(assets, "fonts/简哈哈.ttf")
 
         playTipAnimation()
 
@@ -120,7 +124,7 @@ class AlarmLockActivity : AppCompatActivity() {
     /**
      * 解锁activity
      * */
-    private fun lock() {
+    private fun unlock() {
         AnimatorSet().apply {
             doOnEnd {
                 finish()

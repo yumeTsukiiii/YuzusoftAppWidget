@@ -15,12 +15,14 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModelProvider
 import com.yumetsuki.yuzusoftappwidget.*
 import com.yumetsuki.yuzusoftappwidget.config.Game
 import com.yumetsuki.yuzusoftappwidget.config.Wife
 import com.yumetsuki.yuzusoftappwidget.page.alarm_settings.AlarmSettingsActivity
+import com.yumetsuki.yuzusoftappwidget.page.app_info.AppInfoActivity
 import com.yumetsuki.yuzusoftappwidget.page.main.adapter.CharacterViewPagerAdapter
 import com.yumetsuki.yuzusoftappwidget.page.main.fragments.CharacterFragment
 import com.yumetsuki.yuzusoftappwidget.page.main.viewmodel.MainViewModel
@@ -35,6 +37,10 @@ class MainActivity : AppCompatActivity() {
     private var backTime: Long? = null
 
     private var isMenuStatusChanging = false
+
+    private var isGameChanging = false
+
+    private var isInAppEnding = false
 
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(
@@ -55,7 +61,9 @@ class MainActivity : AppCompatActivity() {
 
         initMenusBtn()
 
-        viewModel.currentGameIndex.value = 0
+        viewModel.currentGameIndex.value = Game.values().indexOfLast {
+            it == CharacterConfig.getMostLikeWife().gameBelong
+        }
 
         viewModel.currentGameIndex.observe(this, androidx.lifecycle.Observer {
 
@@ -63,9 +71,13 @@ class MainActivity : AppCompatActivity() {
 
             mNextGameBtn.isEnabled = it != Game.values().size - 1
 
+            toggleGameArrowImage()
+
             Game.values()[it].apply {
-                initBackgroundAndToolbarInnerImage()
-                initCharacterViewPager()
+                playGameChangingAnimation {
+                    initBackgroundAndToolbarInnerImage()
+                    initCharacterViewPager()
+                }
             }
         })
 
@@ -80,6 +92,49 @@ class MainActivity : AppCompatActivity() {
         Status.isCharacterPlaying = false
     }
 
+    /**
+     * 所选游戏改变时，旋转图标
+     * */
+    private fun playGameChangingAnimation(onMiddleChange: () -> Unit) {
+        if (isGameChanging) return
+        ObjectAnimator.ofFloat(mGameChangingLayout, "alpha", 0f, 1f).apply {
+            doOnStart {
+                isGameChanging = true
+                mGameChangingLayout.visibility = View.VISIBLE
+            }
+            doOnEnd {
+                onMiddleChange()
+                ObjectAnimator.ofFloat(mGameChangingLayout, "alpha", 1f, 0f).apply {
+                    doOnEnd {
+                        isGameChanging = false
+                        mGameChangingLayout.visibility = View.GONE
+                    }
+                }.start()
+            }
+        }.start()
+    }
+
+    private fun toggleGameArrowImage() {
+        mPreviousGameBtn.setImageResource(
+            if (mPreviousGameBtn.isEnabled) {
+                R.drawable.nene_arrow_left
+            } else {
+                R.drawable.nene_arrow_left_disabled
+            }
+        )
+
+        mNextGameBtn.setImageResource(
+            if (mNextGameBtn.isEnabled) {
+                R.drawable.nene_arrow_right
+            } else {
+                R.drawable.nene_arrow_right_disabled
+            }
+        )
+    }
+
+    /**
+     * 初始化当前背景图和Toolbar上显示的标题图片
+     * */
     private fun Game.initBackgroundAndToolbarInnerImage() {
         mToolbarInnerImage.setImageResource(tabImage)
         mMainLayout.setBackgroundResource(backgroundImage)
@@ -90,10 +145,12 @@ class MainActivity : AppCompatActivity() {
      * */
     private fun initGameChangeBtn() {
         mPreviousGameBtn.setOnClickListener {
+            ObjectAnimator.ofFloat(mPreviousGameBtn, "rotation", 0f, -720f).start()
             viewModel.currentGameIndex.value = viewModel.currentGameIndex.value!! - 1
         }
 
         mNextGameBtn.setOnClickListener {
+            ObjectAnimator.ofFloat(mNextGameBtn, "rotation", 0f, 720f).start()
             viewModel.currentGameIndex.value = viewModel.currentGameIndex.value!! + 1
         }
     }
@@ -106,6 +163,10 @@ class MainActivity : AppCompatActivity() {
 
         mAlarmNavigatorActionBtn.setOnClickListener {
             navigateToAlarmSetting()
+        }
+
+        mAboutNavigatorActionBtn.setOnClickListener {
+            navigateToAbout()
         }
 
         mMenuActionExpendBtn.setOnClickListener {
@@ -121,6 +182,20 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    private fun navigateToAbout() {
+        startActivity(
+            Intent(
+                this,
+                AppInfoActivity::class.java
+            ).apply {
+                putExtra(
+                    AppInfoActivity.ALARM_SETTINGS_BACKGROUND_EXTRA,
+                    Game.values()[viewModel.currentGameIndex.value?:0].backgroundImage
+                )
+            }
+        )
     }
 
     /**
@@ -287,6 +362,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * 播放app关闭时，所选择的老婆的声音
+     * */
+    private fun playAppEndVoice(onPlayEnd: () -> Unit) {
+        playMediaAsync(
+            CharacterConfig.getMostLikeWife().appEndVoice
+        ).invokeOnCompletion {
+            onPlayEnd()
+        }
+    }
+
+    /**
      * 初始化服装选择
      * */
     private fun initClothesStatus() {
@@ -303,12 +389,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        if (isInAppEnding) return
+
         if (Calendar.getInstance().timeInMillis - (backTime?:0) > 2000) {
             Toast.makeText(this, "你确定要离开老婆们吗？！", Toast.LENGTH_SHORT).show()
             backTime = Calendar.getInstance().timeInMillis
         } else {
-            finish()
-            exitProcess(0)
+            isInAppEnding = true
+            ObjectAnimator.ofFloat(mMainLayout, "alpha", 1f, 0f).apply {
+                duration = 700
+            }.start()
+            playAppEndVoice {
+                finish()
+                exitProcess(0)
+            }
         }
     }
 
