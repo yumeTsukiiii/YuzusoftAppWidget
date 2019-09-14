@@ -262,11 +262,7 @@ class YuzusoftTimeRemindWidgetProvider: AppWidgetProvider() {
         } ${
             Calendar.getInstance().run {
                 "${
-                if (get(Calendar.HOUR) > 12) {
-                    get(Calendar.HOUR) - 12
-                } else {
-                    get(Calendar.HOUR)
-                }
+                    get(Calendar.HOUR_OF_DAY) % 24
                 }:${
                     "${
                         if (get(Calendar.MINUTE) < 10) {
