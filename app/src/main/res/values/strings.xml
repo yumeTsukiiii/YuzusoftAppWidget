@@ -50,4 +50,5 @@
     <string name="add_character_text">添加角色</string>
     <string name="complete_edit_text">完成编辑</string>
     <string name="exit_edit_text">退出编辑</string>
+    <string name="select_character_text">选择角色</string>
 </resources>

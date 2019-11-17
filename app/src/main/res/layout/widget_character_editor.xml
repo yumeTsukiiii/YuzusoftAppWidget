@@ -11,15 +11,30 @@
         android:layout_gravity="end|top">
 
         <ImageButton
+            android:id="@+id/mDeleteEditCharacterBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_delete_red_24dp"
-            android:visibility="gone"
+            android:backgroundTint="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/mChangeEditCharacterEmojiBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_insert_emoticon_blue_24dp"
+            android:backgroundTint="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/mChangeEditCharacterClothesBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/clothes_24dp"
             android:backgroundTint="@android:color/transparent"/>
 
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/mEditCharacterImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
