@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.yumetsuki.yuzusoftappwidget.R
 import com.yumetsuki.yuzusoftappwidget.page.app_info.viewmodel.AppInfoViewModel
-import kotlinx.android.synthetic.main.app_info_fragment.view.*
+import kotlinx.android.synthetic.main.fragment_app_info.view.*
 
 class AppInfoFragment : Fragment() {
 
@@ -29,7 +29,7 @@ class AppInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.app_info_fragment, container, false).apply {
+        return inflater.inflate(R.layout.fragment_app_info, container, false).apply {
             mAppInfoLayout.background =
                 resources.getDrawable(backgroundImageResource!!, resources.newTheme())
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.yumetsuki.yuzusoftappwidget.widget.DragZoomLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="end|top">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete_red_24dp"
+            android:visibility="gone"
+            android:backgroundTint="@android:color/transparent"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/murasame_bikuri" />
+
+</com.yumetsuki.yuzusoftappwidget.widget.DragZoomLayout>
