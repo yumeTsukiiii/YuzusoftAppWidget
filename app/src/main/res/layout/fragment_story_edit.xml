@@ -2,11 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/mStoryEditContainer"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:id="@+id/mStoryEditContainer">
 
     <ImageView
+        android:id="@+id/mStoryEditBackgroundImg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
@@ -44,6 +43,14 @@
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:orientation="vertical">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mSwitchBackgroundBtn"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/switch_background_btn"
+                    android:layout_marginTop="8dp"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/mAddCharacterBtn"
@@ -87,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:gravity="top"
-            android:background="@null"
+            android:background="@drawable/edit_text_white_border"
             android:inputType="textMultiLine"
             android:textColor="@android:color/white"
             android:layout_marginTop="8dp"
@@ -100,7 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:gravity="top"
-            android:background="@null"
+            android:background="@drawable/edit_text_white_border"
             android:inputType="textMultiLine"
             android:textColor="@android:color/white"
             android:layout_marginTop="4dp"

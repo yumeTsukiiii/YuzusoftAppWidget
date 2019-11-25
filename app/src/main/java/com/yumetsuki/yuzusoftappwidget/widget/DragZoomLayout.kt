@@ -5,7 +5,6 @@ import android.graphics.PointF
 import android.util.AttributeSet
 import android.view.*
 import android.widget.FrameLayout
-import android.widget.ImageView
 import com.yumetsuki.yuzusoftappwidget.R
 import kotlin.math.sqrt
 
@@ -26,6 +25,10 @@ class DragZoomLayout
 
     private var mZoomMiddlePoint: PointF = PointF()
 
+    private var onScaleListener: ((scaleX: Float, scaleY: Float) -> Unit)? = null
+
+    private var onTranslateListener: ((translateX: Float, translateY: Float) -> Unit)? = null
+
     var editable: Boolean = true
         set(value) {
             if (value) {
@@ -35,6 +38,14 @@ class DragZoomLayout
             }
             field = value
         }
+
+    fun setOnScaleListener(listener: ((scaleX: Float, scaleY: Float) -> Unit)?) {
+        onScaleListener = listener
+    }
+
+    fun setOnTranslateListener(listener: ((translateX: Float, translateY: Float) -> Unit)?) {
+        onTranslateListener = listener
+    }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
         //重写onTouch而不是使用Gesture，因为同时使用ScaleGesture和Gesture两个动作会同时发生
@@ -82,6 +93,7 @@ class DragZoomLayout
                 //加上前一个translate的原因是event的x、y位置在translate发生变化后也会发生相对变化，scale同理
                 translationX += dx
                 translationY += dy
+                onTranslateListener?.invoke(translationX, translationY)
             }
             ActionMode.ZOOM -> {
                 //两个手指并拢时的距离大于10
@@ -90,6 +102,7 @@ class DragZoomLayout
                 }?.let {
                     scaleX *= it / mZoomStartDistance
                     scaleY *= it / mZoomStartDistance
+                    onScaleListener?.invoke(scaleX, scaleY)
                 }
             }
             ActionMode.NULL -> {}

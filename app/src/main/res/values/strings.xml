@@ -51,4 +51,16 @@
     <string name="complete_edit_text">完成编辑</string>
     <string name="exit_edit_text">退出编辑</string>
     <string name="select_character_text">选择角色</string>
+    <string name="story_board_text">故事板</string>
+    <string name="add_chapter_text">添加章节</string>
+    <string name="save_text">保存</string>
+    <string name="add_condition_text">添加分支</string>
+    <string name="edit_mode_text">编辑模式</string>
+    <string name="add_story_text">添加故事</string>
+    <string name="story_name_text">故事名称</string>
+    <string name="no_story_tip">还没有同人故事唔姆！快去写一个唔姆！</string>
+    <string name="no_chapter_tip">还没有章节唔姆！赶紧创建一个唔姆！</string>
+    <string name="chapter_name_text">章节名称</string>
+    <string name="switch_background_btn">切换背景</string>
+    <string name="background_select_text">选择背景</string>
 </resources>

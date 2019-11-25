@@ -12,23 +12,25 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.yumetsuki.yuzusoftappwidget.R
+import com.yumetsuki.yuzusoftappwidget.config.Background
 import com.yumetsuki.yuzusoftappwidget.config.Wife
-import com.yumetsuki.yuzusoftappwidget.model.StoryPage
+import com.yumetsuki.yuzusoftappwidget.model.StoryPageModel
+import com.yumetsuki.yuzusoftappwidget.page.background_select.BackgroundSelectActivity
 import com.yumetsuki.yuzusoftappwidget.page.character_select.CharacterSelectActivity
-import com.yumetsuki.yuzusoftappwidget.page.story_edit.viewModel.StoryEditViewModel
+import com.yumetsuki.yuzusoftappwidget.page.story_edit.viewModel.StoryEditFragViewModel
 import kotlinx.android.synthetic.main.fragment_story_edit.view.*
 import kotlinx.android.synthetic.main.widget_character_editor.view.*
 
 class StoryEditFragment: Fragment() {
 
-    private val viewModel: StoryEditViewModel by lazy {
-        ViewModelProvider(this).get(StoryEditViewModel::class.java)
+    private val viewModel: StoryEditFragViewModel by lazy {
+        ViewModelProvider(this).get(StoryEditFragViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.storyPages.value = arrayListOf(
-            StoryPage(arrayListOf(), "")
+            StoryPageModel(arrayListOf(), null, "", Background.JinjiaBack.res)
         )
         viewModel.currentStoryPage.value = 0
         viewModel.isDrawerExpand.observe(this, Observer {
@@ -46,7 +48,12 @@ class StoryEditFragment: Fragment() {
         })
 
         viewModel.storyPages.observe(this, Observer {
-            viewModel.storyPages.value!![viewModel.currentStoryPage.value!!].characters.forEachIndexed { index, character ->
+            view?.apply {
+                mStoryEditBackgroundImg.setImageResource(
+                    viewModel.storyPages.value!![viewModel.currentStoryPage.value!!].background
+                )
+            }
+            viewModel.storyPages.value!![viewModel.currentStoryPage.value!!].characterModels.forEachIndexed { index, character ->
                 generateCharacterEditView(view!!, character.wife, character.indexInPageView, index)
             }
         })
@@ -65,11 +72,15 @@ class StoryEditFragment: Fragment() {
             mToggleRightToolDrawerImg.setOnClickListener {
                 viewModel.isDrawerExpand.value = !(viewModel.isDrawerExpand.value?:false)
             }
+            mSwitchBackgroundBtn.setOnClickListener {
+                startActivityForResult(Intent(
+                    this@StoryEditFragment.activity, BackgroundSelectActivity::class.java
+                ), FOR_BACKGROUND_SELECT)
+            }
             mAddCharacterBtn.setOnClickListener {
                 startActivityForResult(Intent(
                     this@StoryEditFragment.activity, CharacterSelectActivity::class.java
                 ), FOR_WIFE_SELECT)
-                viewModel.storyPages
             }
         }
     }
@@ -81,6 +92,14 @@ class StoryEditFragment: Fragment() {
         }?.also {
             val wife = it.getSerializableExtra(CharacterSelectActivity.SELECT_WIFE) as Wife
             viewModel.addCharacterClothes(wife, view!!.mStoryEditContainer.childCount - 2)
+        }
+
+        data?.takeIf {
+            requestCode == FOR_BACKGROUND_SELECT
+                    && resultCode == BackgroundSelectActivity.FOR_BACKGROUND_SELECT_RESULT
+        }?.also {
+            val background = it.getSerializableExtra(BackgroundSelectActivity.SELECT_BACKGROUND) as Background
+            viewModel.updateBackground(background)
         }
     }
 
@@ -95,7 +114,7 @@ class StoryEditFragment: Fragment() {
         characterView.mEditCharacterImage.setImageResource(
             viewModel.storyPages.value!![
                     viewModel.currentStoryPage.value!!
-            ].characters[index].let {
+            ].characterModels[index].let {
                 wife.res[it.clothesIndex].expressions[it.expressionIndex]
             }
         )
@@ -116,7 +135,7 @@ class StoryEditFragment: Fragment() {
             mChangeEditCharacterClothesBtn.setOnClickListener {
                 val character = viewModel.storyPages.value!![
                         viewModel.currentStoryPage.value!!
-                ].characters[index]
+                ].characterModels[index]
                 viewModel.changeCharacterClothes(
                     index,
                     (character.clothesIndex + 1) % character.wife.res.size
@@ -125,11 +144,17 @@ class StoryEditFragment: Fragment() {
             mChangeEditCharacterEmojiBtn.setOnClickListener {
                 val character = viewModel.storyPages.value!![
                         viewModel.currentStoryPage.value!!
-                ].characters[index]
+                ].characterModels[index]
                 viewModel.changeCharacterExpression(
                     index,
                     (character.expressionIndex + 1) % character.wife.res[character.clothesIndex].expressions.size
                 )
+            }
+            mDragCharacter.setOnScaleListener { scaleX, _ ->
+                viewModel.changeCharacterScale(index, scaleX)
+            }
+            mDragCharacter.setOnTranslateListener { translateX, translateY ->
+                viewModel.changeCharacterTranslate(index, translateX, translateY)
             }
         }
     }
@@ -141,6 +166,8 @@ class StoryEditFragment: Fragment() {
         }
 
         private const val FOR_WIFE_SELECT = 1000
+
+        private const val FOR_BACKGROUND_SELECT = 200
 
     }
 

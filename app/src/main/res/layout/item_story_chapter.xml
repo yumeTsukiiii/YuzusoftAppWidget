@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageButton
+        android:id="@+id/mRemoveChapterBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_remove_red_24dp"
+        android:layout_gravity="start|center"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="#66000000"
+        app:cardCornerRadius="24dp"
+        app:contentPaddingTop="16dp"
+        app:contentPaddingBottom="16dp"
+        app:contentPaddingLeft="32dp"
+        app:contentPaddingRight="32dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/mChapterNameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="十年前的约定"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>

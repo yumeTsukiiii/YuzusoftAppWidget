@@ -26,10 +26,12 @@ import com.yumetsuki.yuzusoftappwidget.page.app_info.AppInfoActivity
 import com.yumetsuki.yuzusoftappwidget.page.main.adapter.CharacterViewPagerAdapter
 import com.yumetsuki.yuzusoftappwidget.page.main.fragments.CharacterFragment
 import com.yumetsuki.yuzusoftappwidget.page.main.viewmodel.MainViewModel
+import com.yumetsuki.yuzusoftappwidget.page.story_board.StoryBoardActivity
 import com.yumetsuki.yuzusoftappwidget.utils.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Exception
 import java.util.*
+import kotlin.math.sqrt
 import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
@@ -161,6 +163,10 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("RestrictedApi")
     private fun initMenusBtn() {
 
+        mStoryNavigatorActionBtn.setOnClickListener {
+            navigateToStoryBoard()
+        }
+
         mAlarmNavigatorActionBtn.setOnClickListener {
             navigateToAlarmSetting()
         }
@@ -184,6 +190,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun navigateToStoryBoard() {
+        startActivity(
+            Intent(
+                this,
+                StoryBoardActivity::class.java
+            )
+        )
+    }
+
     private fun navigateToAbout() {
         startActivity(
             Intent(
@@ -205,6 +220,7 @@ class MainActivity : AppCompatActivity() {
     private fun showSubMenuBtn() {
         mAboutNavigatorActionBtn.visibility = View.VISIBLE
         mAlarmNavigatorActionBtn.visibility = View.VISIBLE
+        mStoryNavigatorActionBtn.visibility = View.VISIBLE
         AnimatorSet().apply {
 
             doOnEnd { isMenuStatusChanging = false }
@@ -217,6 +233,18 @@ class MainActivity : AppCompatActivity() {
                 ObjectAnimator.ofFloat(mAlarmNavigatorActionBtn, "alpha", 0f, 1f)
             ).with(
                 ObjectAnimator.ofFloat(mAlarmNavigatorActionBtn, "translationX",  0f, -200f)
+            ).with(
+                ObjectAnimator.ofFloat(mStoryNavigatorActionBtn, "alpha", 0f, 1f)
+            ).with(
+                ObjectAnimator.ofFloat(mStoryNavigatorActionBtn, "translationX", 0f, -200f)
+            ).before(
+                ObjectAnimator.ofFloat(mStoryNavigatorActionBtn, "translationX", -200f, -200f * sqrt(2f) / 2).apply {
+                    interpolator = AccelerateInterpolator()
+                }
+            ).before(
+                ObjectAnimator.ofFloat(mStoryNavigatorActionBtn, "translationY", 0f, -200f * sqrt(2f) / 2).apply {
+                    interpolator = DecelerateInterpolator()
+                }
             ).before(
                 ObjectAnimator.ofFloat(mAlarmNavigatorActionBtn, "translationX",  -200f, 0f).apply {
                     interpolator = AccelerateInterpolator()
@@ -238,6 +266,7 @@ class MainActivity : AppCompatActivity() {
             doOnEnd {
                 mAboutNavigatorActionBtn.visibility = View.GONE
                 mAlarmNavigatorActionBtn.visibility = View.GONE
+                mStoryNavigatorActionBtn.visibility = View.GONE
                 isMenuStatusChanging = false
             }
             play(
@@ -248,6 +277,14 @@ class MainActivity : AppCompatActivity() {
                 ObjectAnimator.ofFloat(mAlarmNavigatorActionBtn, "translationY",  -200f, 0f).apply {
                     interpolator = AccelerateInterpolator()
                 }
+            ).with(
+                ObjectAnimator.ofFloat(mStoryNavigatorActionBtn, "translationX",  -200f * sqrt(2f) / 2, -200f).apply {
+                    interpolator = DecelerateInterpolator()
+                }
+            ).with(
+                ObjectAnimator.ofFloat(mStoryNavigatorActionBtn, "translationY",  -200f * sqrt(2f) / 2, 0f).apply {
+                    interpolator = AccelerateInterpolator()
+                }
             ).before(
                 ObjectAnimator.ofFloat(mAboutNavigatorActionBtn, "alpha", 1f, 0f)
             ).before(
@@ -256,6 +293,10 @@ class MainActivity : AppCompatActivity() {
                 ObjectAnimator.ofFloat(mAlarmNavigatorActionBtn, "alpha", 1f, 0f)
             ).before(
                 ObjectAnimator.ofFloat(mAlarmNavigatorActionBtn, "translationX",  -200f, 0f)
+            ).before(
+                ObjectAnimator.ofFloat(mStoryNavigatorActionBtn, "alpha",  1f, 0f)
+            ).before(
+                ObjectAnimator.ofFloat(mStoryNavigatorActionBtn, "translationX",  -200f, 0f)
             )
 
         }.start()

@@ -4,11 +4,18 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp">
 
+    <ImageView
+        android:id="@+id/mSelectCharacterImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/murasame_normal" />
+
+
     <RadioButton
         android:id="@+id/mSelectCharacterRadioBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:enabled="false"
         android:layout_gravity="end|top"/>
 
     <ImageView
@@ -17,12 +24,5 @@
         android:layout_height="48dp"
         android:src="@drawable/murasame_icon"
         android:layout_gravity="top|start"/>
-
-    <ImageView
-        android:id="@+id/mSelectCharacterImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@drawable/murasame_normal" />
 
 </FrameLayout>
