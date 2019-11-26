@@ -22,7 +22,6 @@
             android:id="@+id/mBackgroundSelectToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_close_white_24dp"
             app:title="@string/background_select_text"
             app:titleTextColor="@android:color/white"/>
 

@@ -19,4 +19,7 @@ interface StoryPageDao {
     @Query("SELECT * FROM story_page WHERE chapter_id=:chapterId")
     suspend fun queryStoryPagesByChapterId(chapterId: Int): List<StoryPage>
 
+    @Query("SELECT * FROM story_page WHERE id=:pageId")
+    suspend fun queryStoryPageById(pageId: Int): StoryPage?
+
 }

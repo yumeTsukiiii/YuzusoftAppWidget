@@ -34,7 +34,6 @@
         </activity>
         <activity
             android:name=".page.character_select.CharacterSelectActivity"
-            android:parentActivityName=".page.story_edit.StoryEditActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".page.app_info.AppInfoActivity"

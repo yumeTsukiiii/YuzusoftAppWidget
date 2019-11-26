@@ -22,7 +22,6 @@
             android:id="@+id/mCharacterSelectToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_close_white_24dp"
             app:title="@string/select_character_text"
             app:titleTextColor="@android:color/white"/>
 

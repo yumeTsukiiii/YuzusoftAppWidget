@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mStoryEditContainer">
 
     <ImageView
@@ -10,6 +11,46 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/senrenbanka_background"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="112dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="vertical"
+        android:background="@drawable/background_round_transblack">
+
+        <EditText
+            android:id="@+id/mSpeakerNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="top"
+            android:background="@drawable/edit_text_white_border"
+            android:inputType="textMultiLine"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="20sp"
+            android:layout_weight="1"/>
+
+        <EditText
+            android:id="@+id/mSpeakerContentEditText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="top"
+            android:background="@drawable/edit_text_white_border"
+            android:inputType="textMultiLine"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="2"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/mRightToolDrawer"
@@ -61,13 +102,31 @@
                     android:layout_marginTop="8dp"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mSaveCurrentPageBtn"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/complete_edit_text"
+                    android:text="@string/save_page_text"
                     android:layout_marginTop="8dp"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mHistoryEditPageBtn"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/history_page_text"
+                    android:layout_marginTop="8dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mNextPageBtn"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/next_page_text"
+                    android:layout_marginTop="8dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mExitEditBtn"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -80,42 +139,45 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mHistoryLayout"
         android:layout_width="match_parent"
-        android:layout_height="112dp"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:orientation="vertical"
-        android:background="@drawable/background_round_transblack">
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#66000000">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="top"
-            android:background="@drawable/edit_text_white_border"
-            android:inputType="textMultiLine"
+        <TextView
+            android:id="@+id/mHistoryPageTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/history_page_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:textColor="@android:color/white"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@id/mCloseHistoryPageBtn"
+            android:textSize="20sp"/>
+
+        <ImageButton
+            android:id="@+id/mCloseHistoryPageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:textSize="20sp"
-            android:layout_weight="1"/>
+            android:src="@drawable/ic_close_white_24dp"/>
 
-        <EditText
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mHistoryRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="top"
-            android:background="@drawable/edit_text_white_border"
-            android:inputType="textMultiLine"
-            android:textColor="@android:color/white"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_weight="2"/>
+            app:layout_constraintTop_toBottomOf="@id/mCloseHistoryPageBtn"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

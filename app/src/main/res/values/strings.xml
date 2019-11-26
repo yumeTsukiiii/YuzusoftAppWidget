@@ -48,7 +48,7 @@
     <string name="app_info_appbar_title">应用说明</string>
     <string name="alarm_settings_appbar_title">闹钟设置</string>
     <string name="add_character_text">添加角色</string>
-    <string name="complete_edit_text">完成编辑</string>
+    <string name="save_page_text">保存</string>
     <string name="exit_edit_text">退出编辑</string>
     <string name="select_character_text">选择角色</string>
     <string name="story_board_text">故事板</string>
@@ -63,4 +63,6 @@
     <string name="chapter_name_text">章节名称</string>
     <string name="switch_background_btn">切换背景</string>
     <string name="background_select_text">选择背景</string>
+    <string name="history_page_text">历史页面</string>
+    <string name="next_page_text">下一页</string>
 </resources>
