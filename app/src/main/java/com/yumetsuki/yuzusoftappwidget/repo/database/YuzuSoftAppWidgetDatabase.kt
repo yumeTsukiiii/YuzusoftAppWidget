@@ -14,7 +14,9 @@ import com.yumetsuki.yuzusoftappwidget.repo.entity.*
         Story::class,
         StoryPage::class,
         StoryChapter::class,
-        StoryCharacter::class
+        StoryCharacter::class,
+        PreviousEditRecord::class,
+        StoryRecordData::class
     ],
     version = 1
 )
@@ -31,6 +33,10 @@ abstract class YuzuSoftAppWidgetDatabase: RoomDatabase() {
     abstract fun storyPageDao(): StoryPageDao
 
     abstract fun storyCharacterDao(): StoryCharacterDao
+
+    abstract fun previousEditRecordDao(): PreviousEditRecordDao
+
+    abstract fun storyRecordDataDao(): StoryRecordDataDao
 
     companion object {
 

@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.yumetsuki.yuzusoftappwidget.PreviousEditRecord
 import com.yumetsuki.yuzusoftappwidget.R
 import com.yumetsuki.yuzusoftappwidget.config.Background
 import com.yumetsuki.yuzusoftappwidget.config.Wife
@@ -42,10 +41,10 @@ class StoryEditFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        PreviousEditRecord.chapterId.takeIf {
+        actViewModel.previousEditRecord.value?.chapterId.takeIf {
             it == actViewModel.currentChapterId.value
         }?.let {
-            viewModel.requestStoryPageByRecordPageId(actViewModel.currentChapterId.value!!, PreviousEditRecord.pageId)
+            viewModel.requestStoryPageByRecordPageId(actViewModel.currentChapterId.value!!, actViewModel.previousEditRecord.value!!.pageId)
         }?:viewModel.requestLastStoryPageModelByChapterId(actViewModel.currentChapterId.value!!)
 
         viewModel.isDrawerExpand.observe(this, Observer {
@@ -137,13 +136,23 @@ class StoryEditFragment: Fragment() {
                 ), FOR_WIFE_SELECT)
             }
             mSaveCurrentPageBtn.setOnClickListener {
-                viewModel.saveCurrentPage()
+                viewModel.saveCurrentPage().invokeOnCompletion {
+                    actViewModel.updatePreviousEditRecord(
+                        viewModel.currentStoryPage.value!!.chapterId,
+                        viewModel.currentStoryPage.value!!.id
+                    )
+                }
             }
             mExitEditBtn.setOnClickListener {
                 this@StoryEditFragment.activity?.finish()
             }
             mNextPageBtn.setOnClickListener {
-                viewModel.nextPage()
+                viewModel.nextPage().invokeOnCompletion {
+                    actViewModel.updatePreviousEditRecord(
+                        viewModel.currentStoryPage.value!!.chapterId,
+                        viewModel.currentStoryPage.value!!.id
+                    )
+                }
             }
             mHistoryEditPageBtn.setOnClickListener {
                 viewModel.isShowHistory.value = true
@@ -224,7 +233,6 @@ class StoryEditFragment: Fragment() {
 
     private fun removeRedundantCharacterEditView(parent: View, indexesInPage: List<Int>) {
         parent.mStoryEditContainer.children.filterIndexed { index, view ->
-            val a = indexesInPage
             view is DragZoomLayout && index !in indexesInPage
         }.forEach {
             parent.mStoryEditContainer.removeView(it)
@@ -244,6 +252,10 @@ class StoryEditFragment: Fragment() {
                 wife.res[it.clothesIndex].expressions[it.expressionIndex]
             }
         )
+        characterView.translationX = viewModel.currentStoryPage.value!!.characterModels[index].translateX
+        characterView.translationY = viewModel.currentStoryPage.value!!.characterModels[index].translateY
+        characterView.scaleX = viewModel.currentStoryPage.value!!.characterModels[index].scale
+        characterView.scaleY = viewModel.currentStoryPage.value!!.characterModels[index].scale
     }
 
     private fun generateNewCharacterEditView(parent: View, index: Int): View {

@@ -4,12 +4,12 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.yumetsuki.yuzusoftappwidget.PreviousEditRecord
 import com.yumetsuki.yuzusoftappwidget.config.Background
 import com.yumetsuki.yuzusoftappwidget.config.Wife
 import com.yumetsuki.yuzusoftappwidget.model.SimpleHistory
 import com.yumetsuki.yuzusoftappwidget.model.StoryPageModel
 import com.yumetsuki.yuzusoftappwidget.repo.StoryRepository
+import com.yumetsuki.yuzusoftappwidget.repo.entity.PreviousEditRecord
 import kotlinx.coroutines.*
 
 class StoryEditFragViewModel(
@@ -151,7 +151,6 @@ class StoryEditFragViewModel(
                 }
             }
             removedCharacter.clear()
-            savePageRecord()
             toastTip.postValue("保存成功")
         }
     }
@@ -187,16 +186,21 @@ class StoryEditFragViewModel(
                 currentStoryPage.value = withContext(Dispatchers.IO) {
                     storyRepository.getLastStoryPageModelByChapterId(
                         currentStoryPage.value!!.chapterId
+                    )?:StoryPageModel(
+                        arrayListOf(),
+                        null,
+                        "",
+                        Background.JinjiaBack.res,
+                        chapterId = currentStoryPage.value!!.chapterId
                     )
                 }
             }
-            savePageRecord()
             toastTip.postValue("删除成功")
         }
     }
 
-    fun nextPage() {
-        viewModelScope.launch {
+    fun nextPage(): Job {
+        return viewModelScope.launch {
             saveCurrentPage().join()
             currentStoryPage.value = withContext(Dispatchers.IO) {
                 storyRepository.getStoryPageModelsByChapterId(currentStoryPage.value!!.chapterId)
@@ -215,8 +219,4 @@ class StoryEditFragViewModel(
         }
     }
 
-    fun savePageRecord() {
-        PreviousEditRecord.chapterId = currentStoryPage.value!!.chapterId
-        PreviousEditRecord.pageId = currentStoryPage.value!!.id
-    }
 }

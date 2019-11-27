@@ -17,11 +17,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <activity android:name=".page.background_select.BackgroundSelectActivity"
+        <activity android:name=".page.story_data.StoryRecordDataActivity"
             android:screenOrientation="landscape"/>
-
-        <activity android:name=".page.story.StoryActivity" />
+        <activity
+            android:name=".page.background_select.BackgroundSelectActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".page.story.StoryActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".page.story_board.StoryBoardActivity"
             android:parentActivityName=".page.main.MainActivity"

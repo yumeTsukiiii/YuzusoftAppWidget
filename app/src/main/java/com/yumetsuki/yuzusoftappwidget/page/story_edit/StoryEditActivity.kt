@@ -2,10 +2,8 @@ package com.yumetsuki.yuzusoftappwidget.page.story_edit
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.yumetsuki.yuzusoftappwidget.PreviousEditRecord
 import com.yumetsuki.yuzusoftappwidget.R
 import com.yumetsuki.yuzusoftappwidget.page.story_edit.fragments.StoryChapterEditFragment
 import com.yumetsuki.yuzusoftappwidget.page.story_edit.fragments.StoryEditFragment
@@ -15,7 +13,7 @@ import com.yumetsuki.yuzusoftappwidget.repo.entity.Story
 class StoryEditActivity: AppCompatActivity() {
 
     private val viewModel: StoryEditActViewModel by lazy {
-        ViewModelProvider(this).get(StoryEditActViewModel::class.java)
+        ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application)).get(StoryEditActViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,11 +23,19 @@ class StoryEditActivity: AppCompatActivity() {
         viewModel.story.value = intent.getParcelableExtra<Story>(STORY_EXTRA)
 
         viewModel.story.observe(this, Observer {
-            navigateToChapterOrPageEdit(viewModel.getPreviousEditRecord())
+            viewModel.requestPreviousEditRecord(it.id)
+        })
+
+        viewModel.previousEditRecord.observe(this, Observer {
+            if (viewModel.currentChapterId.value == null) {
+                viewModel.currentChapterId.value = it?.chapterId
+            }
         })
 
         viewModel.currentChapterId.observe(this, Observer {
-            it?.also { _ ->
+            it?.takeIf {
+                it != -1
+            }?.also { _ ->
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.container, StoryEditFragment.newInstance())
                     .commitNow()
@@ -38,14 +44,6 @@ class StoryEditActivity: AppCompatActivity() {
                 .commitNow()
         })
 
-    }
-
-    private fun navigateToChapterOrPageEdit(previousEditRecord: PreviousEditRecord) {
-        if (previousEditRecord.chapterId > 0) {
-            viewModel.currentChapterId.value = previousEditRecord.chapterId
-        } else {
-            viewModel.currentChapterId.value = null
-        }
     }
 
     companion object {

@@ -4,11 +4,9 @@ import android.content.Context
 import androidx.annotation.WorkerThread
 import com.yumetsuki.yuzusoftappwidget.config.Wife
 import com.yumetsuki.yuzusoftappwidget.model.*
-import com.yumetsuki.yuzusoftappwidget.repo.dao.StoryChapterDao
-import com.yumetsuki.yuzusoftappwidget.repo.dao.StoryCharacterDao
-import com.yumetsuki.yuzusoftappwidget.repo.dao.StoryDao
-import com.yumetsuki.yuzusoftappwidget.repo.dao.StoryPageDao
+import com.yumetsuki.yuzusoftappwidget.repo.dao.*
 import com.yumetsuki.yuzusoftappwidget.repo.database.YuzuSoftAppWidgetDatabase
+import com.yumetsuki.yuzusoftappwidget.repo.entity.PreviousEditRecord
 import com.yumetsuki.yuzusoftappwidget.repo.entity.Story
 import com.yumetsuki.yuzusoftappwidget.repo.entity.StoryCharacter
 import com.yumetsuki.yuzusoftappwidget.repo.entity.StoryPage
@@ -18,7 +16,9 @@ class StoryRepository(
     private val storyDao: StoryDao,
     private val storyChapterDao: StoryChapterDao,
     private val storyPageDao: StoryPageDao,
-    private val storyCharacterDao: StoryCharacterDao
+    private val storyCharacterDao: StoryCharacterDao,
+    private val storyRecordDataDao: StoryRecordDataDao,
+    private val previousEditRecordDao: PreviousEditRecordDao
 ) {
 
     @WorkerThread
@@ -220,6 +220,16 @@ class StoryRepository(
         }
     }
 
+    suspend fun getPreviousEditRecordByStoryId(storyId: Int) = previousEditRecordDao.queryPreviousEditRecordByStoryId(storyId)
+
+    suspend fun insertPreviousEditRecord(noIdPreviousEditRecord: NoIdPreviousEditRecord) {
+        previousEditRecordDao.insertPreviousEditRecord(noIdPreviousEditRecord)
+    }
+
+    suspend fun updatePreviousEditRecord(previousEditRecord: PreviousEditRecord) {
+        previousEditRecordDao.updatePreviousEditRecord(previousEditRecord)
+    }
+
     companion object {
 
         fun create(context: Context): StoryRepository {
@@ -228,7 +238,9 @@ class StoryRepository(
                     storyDao(),
                     storyChapterDao(),
                     storyPageDao(),
-                    storyCharacterDao()
+                    storyCharacterDao(),
+                    storyRecordDataDao(),
+                    previousEditRecordDao()
                 )
             }
         }
