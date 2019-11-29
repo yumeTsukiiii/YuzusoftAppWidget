@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="8dp"
+    tools:background="#66000000">
+
+    <TextView
+        android:id="@+id/mSpeakerNameTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@android:color/white"
+        tools:text="【芳乃】"
+        app:layout_constraintEnd_toStartOf="@id/mBackHistoryBtn"
+        android:textSize="22sp"/>
+
+    <TextView
+        android:id="@+id/mSpeakerContentTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/mSpeakerNameTv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        tools:text="   ciallo~"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/mBackHistoryBtn"
+        android:textSize="20sp"/>
+
+    <ImageButton
+        android:id="@+id/mBackHistoryBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="8dp"
+        android:backgroundTint="@android:color/transparent"
+        android:src="@drawable/ic_subdirectory_arrow_left_black_24dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

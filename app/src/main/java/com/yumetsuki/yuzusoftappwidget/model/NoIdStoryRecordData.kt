@@ -9,10 +9,6 @@ import com.yumetsuki.yuzusoftappwidget.repo.entity.StoryPage
 
 class NoIdStoryRecordData(
 
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    val id: Int,
-
     @ColumnInfo(name = "story_id")
     @ForeignKey(entity = Story::class, parentColumns = ["id"], childColumns = ["story_id"], onDelete = ForeignKey.CASCADE)
     val storyId: Int,

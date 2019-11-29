@@ -35,7 +35,15 @@ class StoryChapterFragViewModel(
                 storyRepository.addChapter(NoIdStoryChapter(storyId, chapterName))
                 storyRepository.getChaptersByStoryId(storyId) as ArrayList<StoryChapter>
             }
+        }
+    }
 
+    fun removeChapter(chapter: StoryChapter) {
+        viewModelScope.launch {
+            chapters.value = withContext(Dispatchers.IO) {
+                storyRepository.deleteChapter(chapter)
+                storyRepository.getChaptersByStoryId(chapter.storyId) as ArrayList
+            }
         }
     }
 

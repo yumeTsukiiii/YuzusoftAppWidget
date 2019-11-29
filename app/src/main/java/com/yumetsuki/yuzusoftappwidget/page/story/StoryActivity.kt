@@ -26,12 +26,16 @@ class StoryActivity : AppCompatActivity() {
         viewModel.currentChapterId.observe(this, Observer {
             it?.also { chapterId ->
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, StoryFragment.newInstance(chapterId))
+                    .replace(R.id.container, StoryFragment.newInstance(chapterId, viewModel.currentPageId))
                     .commitNow()
             }?:run {
-                toast("还没有章节啦！")
+                toast("没有内容啦！")
                 finish()
             }
+        })
+
+        viewModel.toastTip.observe(this, Observer {
+            toast(it)
         })
 
         if (savedInstanceState == null) {

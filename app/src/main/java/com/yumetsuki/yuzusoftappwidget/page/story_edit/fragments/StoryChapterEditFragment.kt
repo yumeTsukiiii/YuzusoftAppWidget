@@ -71,9 +71,18 @@ class StoryChapterEditFragment: Fragment() {
             mChapterEditRecyclerView.adapter = ChapterEditItemAdapter(
                 viewModel.chapters,
                 {
-
+                    AlertDialog.Builder(this@StoryChapterEditFragment.context!!)
+                        .setTitle("提示")
+                        .setMessage("确认删除这个章节吗？！")
+                        .setPositiveButton("删了！") { dialog, _ ->
+                            viewModel.removeChapter(it)
+                            dialog.cancel()
+                        }.setNegativeButton("再想想") { dialog, _ ->
+                            dialog.cancel()
+                        }.create().show()
                 }
             ) { chapter, _ ->
+
                 actViewModel.currentChapterId.value = chapter.id
             }
             mToggleRightToolDrawerImg.setOnClickListener {

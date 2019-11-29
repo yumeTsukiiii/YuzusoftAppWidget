@@ -6,10 +6,7 @@ import com.yumetsuki.yuzusoftappwidget.config.Wife
 import com.yumetsuki.yuzusoftappwidget.model.*
 import com.yumetsuki.yuzusoftappwidget.repo.dao.*
 import com.yumetsuki.yuzusoftappwidget.repo.database.YuzuSoftAppWidgetDatabase
-import com.yumetsuki.yuzusoftappwidget.repo.entity.PreviousEditRecord
-import com.yumetsuki.yuzusoftappwidget.repo.entity.Story
-import com.yumetsuki.yuzusoftappwidget.repo.entity.StoryCharacter
-import com.yumetsuki.yuzusoftappwidget.repo.entity.StoryPage
+import com.yumetsuki.yuzusoftappwidget.repo.entity.*
 import com.yumetsuki.yuzusoftappwidget.utils.toNoId
 
 class StoryRepository(
@@ -36,6 +33,10 @@ class StoryRepository(
 
     suspend fun addChapter(noIdStoryChapter: NoIdStoryChapter) {
         storyChapterDao.insertStoryChapter(noIdStoryChapter)
+    }
+
+    suspend fun deleteChapter(chapter: StoryChapter) {
+        storyChapterDao.deleteStoryChapter(chapter)
     }
 
     suspend fun getStoryPageModelByPageId(pageId: Int): StoryPageModel? {
@@ -228,6 +229,24 @@ class StoryRepository(
 
     suspend fun updatePreviousEditRecord(previousEditRecord: PreviousEditRecord) {
         previousEditRecordDao.updatePreviousEditRecord(previousEditRecord)
+    }
+
+    suspend fun getStoryRecordsByStoryId(storyId: Int) = storyRecordDataDao.queryStoryRecordDataByStoryId(storyId)
+
+    suspend fun updateStoryRecord(storyRecordData: StoryRecordData) {
+        storyRecordDataDao.updateStoryRecordData(
+            storyRecordData
+        )
+    }
+
+    suspend fun insertStoryRecord(noIdStoryRecordData: NoIdStoryRecordData) {
+        storyRecordDataDao.insertStoryRecordData(
+            noIdStoryRecordData
+        )
+    }
+
+    suspend fun deleteStoryRecord(storyRecordData: StoryRecordData) {
+        storyRecordDataDao.deleteStoryRecordData(storyRecordData)
     }
 
     companion object {

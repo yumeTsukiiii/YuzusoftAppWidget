@@ -29,18 +29,13 @@
             android:name=".page.story_board.StoryBoardActivity"
             android:parentActivityName=".page.main.MainActivity"
             android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".page.character_select.CharacterSelectActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".page.app_info.AppInfoActivity"
-            android:parentActivityName=".page.main.MainActivity" />
+            android:parentActivityName=".page.main.MainActivity"/>
         <activity
             android:name=".page.alarm_lock.AlarmLockActivity"
             android:exported="false"
@@ -52,7 +47,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".page.main.MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".page.alarm_settings.AlarmSettingsActivity"
             android:parentActivityName=".page.main.MainActivity"

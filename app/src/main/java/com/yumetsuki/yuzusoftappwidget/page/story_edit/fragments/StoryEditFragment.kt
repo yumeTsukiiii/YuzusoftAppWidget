@@ -160,6 +160,9 @@ class StoryEditFragment: Fragment() {
             mCloseHistoryPageBtn.setOnClickListener {
                 viewModel.isShowHistory.value = false
             }
+            mChooseChapterBtn.setOnClickListener {
+                actViewModel.currentChapterId.value = -1
+            }
             mHistoryRecyclerView.layoutManager = LinearLayoutManager(context)
             mHistoryRecyclerView.adapter = HistoryItemAdapter(
                 viewModel.histories,

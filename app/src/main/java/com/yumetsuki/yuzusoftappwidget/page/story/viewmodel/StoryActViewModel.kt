@@ -20,12 +20,41 @@ class StoryActViewModel(
 
     val currentChapterId = MutableLiveData<Int>()
 
+    val toastTip = MutableLiveData<String>()
+
+    var currentPageId = -1
+        private set
+
     fun requestFirstChapterId() {
         viewModelScope.launch {
             currentChapterId.value = withContext(Dispatchers.IO) {
-                storyRepository.getChaptersByStoryId(story.value!!.id).lastOrNull()?.id
+                storyRepository.getChaptersByStoryId(story.value!!.id).firstOrNull()?.id
             }
         }
+    }
+
+    fun nextChapter() {
+        viewModelScope.launch {
+            currentChapterId.value = withContext(Dispatchers.IO) {
+                storyRepository.getChaptersByStoryId(story.value!!.id).run {
+                    val currentIndex = indexOfFirst {
+                        it.id == currentChapterId.value!!
+                    }
+                    if (currentIndex == -1 || currentIndex + 1 >= this.size) {
+                        null
+                    } else {
+                        currentPageId = -1
+                        toastTip.postValue("章节:${this[currentIndex].chapterName}")
+                        this[currentIndex + 1].id
+                    }
+                }
+            }
+        }
+    }
+
+    fun jumpToChapterPage(chapterId: Int, pageId: Int) {
+        currentPageId = pageId
+        currentChapterId.value = chapterId
     }
 
 }

@@ -13,12 +13,12 @@ interface StoryRecordDataDao {
     suspend fun insertStoryRecordData(vararg noIdStoryRecordData: NoIdStoryRecordData)
 
     @Delete
-    suspend fun deleteStoryRecordData(vararg previousEditRecord: StoryRecordData)
+    suspend fun deleteStoryRecordData(vararg storyRecordData: StoryRecordData)
 
     @Update
-    suspend fun updateStoryRecordData(vararg previousEditRecord: StoryRecordData)
+    suspend fun updateStoryRecordData(vararg storyRecordData: StoryRecordData)
 
-    @Query("SELECT * FROM previous_edit_record WHERE id=:storyId")
-    suspend fun queryStoryRecordDataByStoryId(storyId: Int): StoryRecordData?
+    @Query("SELECT * FROM story_record_data WHERE story_id=:storyId")
+    suspend fun queryStoryRecordDataByStoryId(storyId: Int): List<StoryRecordData>
 
 }
