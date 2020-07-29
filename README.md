@@ -8,7 +8,7 @@
 
 ---
 
-### 作者个人博客: https://yumetsukiiii.github.io/yumetsuki-blog/
+### 作者个人博客: https://yumetsuki.cn:3000
 ### 意见反馈：提issue，或者，加qq：540160575，或者，加qq群：488687641
 
 #### 一些小问题
